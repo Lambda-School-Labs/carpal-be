@@ -1,7 +1,7 @@
 const express = require("express");
 
 const PORT = process.env.PORT || 3001;
-const HOST = process.env.HOST;
+const HOST = process.env.HOST || "localhost";
 
 const app = express();
 
@@ -30,6 +30,8 @@ app.get("/", function(req, res) {
 
 if (!module.parent) {
     app.listen(PORT, function() {
-        console.log(`App listening to http://localhost:${PORT}`);
+        console.log(`App listening to http://${HOST}:${PORT}`);
     });
 }
+
+module.exports = app;
