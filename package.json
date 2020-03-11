@@ -6,7 +6,8 @@
     "scripts": {
         "test": "cross-env NODE_ENV=testing jest --coverage --verbose --watch",
         "server": "cross-env nodemon index.js",
-        "start": "node index.js"
+        "start": "node index.js",
+        "coverage": "jest --coverage --detectOpenHandles --forceExit || true"
     },
     "repository": {
         "type": "git",
@@ -44,6 +45,12 @@
         "supertest": "^4.0.2"
     },
     "jest": {
-        "testEnvironment": "node"
+        "testEnvironment": "node",
+        "collectCoverageFrom": [
+            "**/*.{js,jsx}",
+            "!**/node_modules/**",
+            "!**/vendor/**",
+            "!**/__tests__/**"
+        ]
     }
 }
