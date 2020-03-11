@@ -15,9 +15,19 @@ const pg = {
     }
 };
 
+const pgLocal = {
+    ...pg,
+    connection: {
+        host: process.env.DB_HOST,
+        database: process.env.DB,
+        user: process.env.USER,
+        password: process.env.PASSWORD
+    }
+};
+
 module.exports = {
-    development: pg,
+    development: pgLocal,
     staging: pg,
     production: pg,
-    testing: { ...pg, connection: process.env.DATABASE_URL_TESTING }
+    testing: pgLocal
 };
