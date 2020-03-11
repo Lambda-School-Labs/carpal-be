@@ -1,3 +1,8 @@
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/a8ec7fda3d1cf5e2c7b1/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/carpal-be/maintainability)
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/a8ec7fda3d1cf5e2c7b1/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/carpal-be/test_coverage)
+
 🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
 
 🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
@@ -171,7 +176,3 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
 🚫 Add DS iOS and/or Andriod links here if applicable.
 
-
-[![Maintainability](https://api.codeclimate.com/v1/badges/a8ec7fda3d1cf5e2c7b1/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/carpal-be/maintainability)
-
-[![Test Coverage](https://api.codeclimate.com/v1/badges/a8ec7fda3d1cf5e2c7b1/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/carpal-be/test_coverage)
