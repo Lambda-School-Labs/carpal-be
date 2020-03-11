@@ -170,3 +170,8 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
 🚫 Add DS iOS and/or Andriod links here if applicable.
+
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/a8ec7fda3d1cf5e2c7b1/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/carpal-be/maintainability)
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/a8ec7fda3d1cf5e2c7b1/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/carpal-be/test_coverage)
