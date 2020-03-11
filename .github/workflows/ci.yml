@@ -22,7 +22,6 @@ steps:
 - uses: actions/setup-node@master
 with:
   node-version: "12"
-# Run the NPM install command before proceeding
 - run: npm install
 # A GitHub action for running tests and publishing coverage
 - uses: paambaati/codeclimate-action@v2.4.0
