@@ -1,63 +1,23 @@
 // Update with your config settings.
 
-module.exports = {
-    development: {
-        client: "pg",
-        connection: process.env.DATABASE_URL,
-        pool: {
-            min: 2,
-            max: 10
-        },
-        migrations: {
-            directory: "./database/migrations"
-        },
-        seeds: {
-            directory: "./database/seeds"
-        }
+const pg = {
+    client: "pg",
+    connection: process.env.DATABASE_URL,
+    pool: {
+        min: 2,
+        max: 10
     },
-
-    testing: {
-        client: "pg",
-        connection: process.env.DATABASE_URL_TESTING,
-        pool: {
-            min: 2,
-            max: 10
-        },
-        migrations: {
-            directory: "./database/migrations"
-        },
-        seeds: {
-            directory: "./database/seeds"
-        }
+    migrations: {
+        directory: "./database/migrations"
     },
-
-    staging: {
-        client: "pg",
-        connection: process.env.DATABASE_URL,
-        pool: {
-            min: 2,
-            max: 10
-        },
-        migrations: {
-            directory: "./database/migrations"
-        },
-        seeds: {
-            directory: "./database/seeds"
-        }
-    },
-
-    production: {
-        client: "pg",
-        connection: process.env.DATABASE_URL,
-        pool: {
-            min: 2,
-            max: 10
-        },
-        migrations: {
-            directory: "./database/migrations"
-        },
-        seeds: {
-            directory: "./database/seeds"
-        }
+    seeds: {
+        directory: "./database/seeds"
     }
+};
+
+module.exports = {
+    development: pg,
+    staging: pg,
+    production: pg,
+    testing: { ...pg, connection: process.env.DATABASE_URL_TESTING }
 };
