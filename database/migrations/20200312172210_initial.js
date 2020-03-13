@@ -4,6 +4,7 @@ exports.up = async function (knex) {
         tbl.string('first_name').notNullable()
         tbl.string('last_name').notNullable()
         tbl.string('email').unique().notNullable()
+        tbl.string('password').notNullable()
         tbl.boolean('is_driver').defaultTo(false)
         tbl.bigInteger('phone_number').notNullable()
         tbl.timestamp('created_at').defaultTo(knex.fn.now())
