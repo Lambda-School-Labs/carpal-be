@@ -24,5 +24,14 @@ describe('Find user by id',  () => {
         expect(user.id).toEqual(2)
         expect(typeof user).toBe('object');
         expect(user).toMatchObject({first_name: 'daniel', last_name: 'martin', email: 'daniel@carpal.com'})
-    })
+    });
+    test('Checking for incorrect user id', async () => {
+
+        const undefineduser = await authModels.findUsersById(4).first();
+        
+        expect(undefineduser).toBeUndefined();
+        expect(undefineduser).toBeFalsy();
+    });
+
+
 })
