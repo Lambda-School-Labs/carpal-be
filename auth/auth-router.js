@@ -7,7 +7,7 @@ const { Models } = require("../ModelClass/Models");
 
 const users = new Models("users");
 
-//Add catch for different type of missing request body 
+//Add catch for different type of missing request body
 router.post("/register", async (req, res, next) => {
     try {
         const user = req.body;
@@ -30,7 +30,7 @@ router.post("/login", async (req, res, next) => {
             res.status(401).json({ message: "unauthorized user" });
         }
     } catch (err) {
-        next(err); 
+        next(err);
     }
 });
 

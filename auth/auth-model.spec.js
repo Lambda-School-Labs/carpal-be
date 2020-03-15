@@ -1,26 +1,21 @@
 const bcrypt = require("bcryptjs");
 const db = require("../database/db-config");
 const authModels = require("./auth-model");
-const { Models } = require('./../ModelClass/Models');
-const models = new Models('users');
-
-
+const { Models } = require("./../ModelClass/Models");
+const models = new Models("users");
 
 beforeEach(async () => {
     await db.seed.run();
 });
 
-
 describe("Find user", () => {
     test("Query all users in the db", async () => {
-        const users = await  models.findAll();
+        const users = await models.findAll();
         expect(users).toHaveLength(3);
         expect(users).not.toBeUndefined();
         expect(users[0].first_name).toBe("dang");
     });
 });
-
-
 
 //FindById
 describe("Find user by id", () => {
@@ -37,7 +32,7 @@ describe("Find user by id", () => {
     });
     test("Checking for incorrect user id", async () => {
         const undefineduser = await authModels.findUsersById(10).first();
-        
+
         expect(undefineduser).toBeUndefined();
         expect(undefineduser).toBeFalsy();
     });
@@ -85,20 +80,17 @@ describe("Add New user", () => {
     });
 });
 
-
-describe('FindBy Module', () => {
-    test('should Test the findByModule', async () => {
-        const lesley = {first_name: 'Lesley', last_name: 'banadzem'}
+describe("FindBy Module", () => {
+    test("should Test the findByModule", async () => {
+        const lesley = { first_name: "Lesley", last_name: "banadzem" };
         const user = await authModels.findBy(lesley);
 
         expect(user).toBeDefined();
-        expect(user[0]).toHaveProperty('email', 'id', 'passport');
-        expect(user[0]).toHaveProperty('email', 'lesley@carpal.com');
-        expect(user[0].password).not.toBe('mnop456');
-
-    })
-    
-})
+        expect(user[0]).toHaveProperty("email", "id", "passport");
+        expect(user[0]).toHaveProperty("email", "lesley@carpal.com");
+        expect(user[0].password).not.toBe("mnop456");
+    });
+});
 
 //function to return new user Object
 //Verify why adding a new user without id throws an error

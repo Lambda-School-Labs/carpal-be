@@ -4,15 +4,16 @@ const jwt = require("jsonwebtoken");
 const { jwtSecret } = require("../config/secrets");
 const { Models } = require("../ModelClass/Models");
 const app = require("./../index.js");
+const db = require("./../database/db-config");
 
+beforeAll(async () => {
+    await db.seed.run();
+});
 describe("Test Register endpoint", () => {
     test("Register new user", async () => {
         const response = await supertest(app)
             .post("/auth/register")
             .send(newUser());
-        //return status code/
-        //return the data format
-        // return data
         expect(response.status).toBe(201);
         expect(response.type).toEqual("application/json");
 
@@ -32,8 +33,8 @@ describe("Test Register endpoint", () => {
     });
 });
 describe("Test Login endpoint", () => {
+    const { email, password } = newUser();
     test("Login user", async () => {
-        const { email, password } = newUser();
         const response = await supertest(app)
             .post("/auth/login")
             .send({ email, password });
@@ -43,10 +44,14 @@ describe("Test Login endpoint", () => {
         expect(response.body).toHaveProperty("id", "token", "email");
     });
 
-    test('Loging in with wrong cred', () => {
-        
-    })
-    
+    test("Login in with wrong cred", async () => {
+        const response = await supertest(app)
+            .post("/auth/login")
+            .send({ email, password: "hello" });
+        expect(response.status).toBe(401);
+        expect(response.type).toEqual("application/json");
+        expect(response.body).toMatchObject({ message: "unauthorized user" });
+    });
 });
 
 //New user to register

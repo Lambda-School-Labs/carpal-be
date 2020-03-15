@@ -7,26 +7,35 @@ class Models {
     }
 
     findBy(filter) {
-        return db(this.name).where(filter).first();
+        return db(this.name)
+            .where(filter)
+            .first();
     }
-    
+
     findAll() {
-        return db(this.name).select('*');
+        return db(this.name).select("*");
     }
 
     add(item) {
         if (this.name === "users") {
             item.password = bcrypt.hashSync(item.password, 12);
         }
-        return db(this.name).insert(item).returning("*")
+        return db(this.name)
+            .insert(item)
+            .returning("*");
     }
 
     update(id, item) {
-        return db(this.name).where({id}).update(item).returning("*");
+        return db(this.name)
+            .where({ id })
+            .update(item)
+            .returning("*");
     }
 
-    delete(id){
-        return db(this.name).where({id}).del();
+    delete(id) {
+        return db(this.name)
+            .where({ id })
+            .del();
     }
 }
 
