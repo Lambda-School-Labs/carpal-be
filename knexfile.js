@@ -1,6 +1,5 @@
 // Update with your config settings.
-require('dotenv').config()
-
+require("dotenv").config();
 
 const pg = {
     client: "pg",
@@ -17,14 +16,21 @@ const pg = {
     }
 };
 
+//Connection Object
+const localConnection = {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    database: process.env.DB,
+    user: process.env.USER,
+    password: process.env.PASSWORD
+};
+
 module.exports = {
     development: {
         ...pg,
+
         connection: {
-            host: process.env.DB_HOST,
-            database: process.env.DB,
-            user: process.env.USER,
-            password: process.env.PASSWORD
+            ...localConnection,
         }
     },
     staging: pg,
@@ -32,10 +38,8 @@ module.exports = {
     testing: {
         ...pg,
         connection: {
-            host: process.env.DB_HOST,
+            ...localConnection,
             database: process.env.DB_TEST,
-            user: process.env.USER,
-            password: process.env.PASSWORD
         }
     }
 };
