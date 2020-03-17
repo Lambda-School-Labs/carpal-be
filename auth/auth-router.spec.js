@@ -1,8 +1,4 @@
 const supertest = require("supertest");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { jwtSecret } = require("../config/secrets");
-const { Models } = require("../Classes/Models");
 const app = require("./../index.js");
 const db = require("./../database/db-config");
 
@@ -33,21 +29,39 @@ describe("Test Register endpoint", () => {
     });
 });
 describe("Test Login endpoint", () => {
-    const { email, password } = newUser();
+    //this user needs to be in a DB seed or created here since before every describe the DB reseeds
+    const user = {
+        email: "dang@carpal.com",
+        password: "abc123"
+    };
     test("Login user", async () => {
         const response = await supertest(app)
             .post("/auth/login")
-            .send({ email, password });
+            .send(user);
 
         expect(response.status).toBe(200);
         expect(response.type).toEqual("application/json");
         expect(response.body).toHaveProperty("id", "token", "email");
     });
 
+    test("Get user from token", async () => {
+        //grab user token
+        const userRes = await supertest(app)
+            .post("/auth/login")
+            .send(user);
+        const res = await supertest(app)
+            .get("/auth")
+            .set({ authorization: userRes.body.token }); //set user's token in auth header
+
+        expect(res.status).toBe(200);
+        expect(res.type).toEqual("application/json");
+        expect(res.body.first_name).toMatch(/dang/i);
+    });
+
     test("Login in with wrong cred", async () => {
         const response = await supertest(app)
             .post("/auth/login")
-            .send({ email, password: "hello" });
+            .send({ email: user.email, password: "hello" });
         expect(response.status).toBe(401);
         expect(response.type).toEqual("application/json");
         expect(response.body).toMatchObject({ message: "unauthorized user" });
