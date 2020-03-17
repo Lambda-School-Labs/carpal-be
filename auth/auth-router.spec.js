@@ -2,7 +2,7 @@ const supertest = require("supertest");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { jwtSecret } = require("../config/secrets");
-const { Models } = require("../ModelClass/Models");
+const { Models } = require("../Classes/Models");
 const app = require("./../index.js");
 const db = require("./../database/db-config");
 
