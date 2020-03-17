@@ -1,8 +1,7 @@
 const bcrypt = require("bcryptjs");
 const db = require("../database/db-config");
-const authModels = require("./auth-model");
-const { Models } = require("./../Classes/Models");
-const models = new Models("users");
+const { Users } = require("../Classes/Users");
+const User = new Users();
 
 beforeEach(async () => {
     await db.seed.run();
@@ -10,7 +9,7 @@ beforeEach(async () => {
 
 describe("Find user", () => {
     test("Query all users in the db", async () => {
-        const users = await models.findAll();
+        const users = await User.findAll();
         expect(users).toHaveLength(3);
         expect(users).not.toBeUndefined();
         expect(users[0].first_name).toBe("dang");
@@ -20,7 +19,7 @@ describe("Find user", () => {
 //FindById
 describe("Find user by id", () => {
     test("Query based on the user id", async () => {
-        const user = await authModels.findUsersById(2).first();
+        const user = await User.findBy({ id: 2 });
         expect(user).not.toBeUndefined();
         expect(user.id).toEqual(2);
         expect(typeof user).toBe("object");
@@ -31,7 +30,7 @@ describe("Find user by id", () => {
         });
     });
     test("Checking for incorrect user id", async () => {
-        const undefineduser = await authModels.findUsersById(10).first();
+        const undefineduser = await User.findBy({ id: 10 });
 
         expect(undefineduser).toBeUndefined();
         expect(undefineduser).toBeFalsy();
@@ -43,31 +42,31 @@ describe("Find user by id", () => {
 describe("Add New user", () => {
     test("User doesn't exist", async () => {
         const { first_name, last_name } = newUser();
-        const findBy = await authModels.findBy({ first_name, last_name });
+        const findBy = await User.findBy({ first_name, last_name });
 
-        expect(findBy).toHaveLength(0);
-        expect(findBy[0]).toBeFalsy();
+        expect(findBy).toBeUndefined();
+        expect(findBy).toBeFalsy();
     });
     test("Add new user", async () => {
         const user = newUser();
-        const addUser = await authModels.addUser(user);
+        const addUser = await User.add(user);
 
         // hash instance of password
-        const { password } = await authModels.findBy(addUser[0]).first();
+        const { password } = await User.findBy({ id: addUser[0] });
 
         expect(addUser).toHaveLength(1);
         expect(addUser).not.toBeFalsy();
         expect(addUser[0].password).toBeUndefined();
-        expect(authModels.findBy(addUser[0])).toBeTruthy();
+        expect(User.findBy({ id: addUser[0] })).toBeTruthy();
         expect(password).not.toBe("abc1234");
     });
 
     test("test for password hash", async () => {
         const user = newUser();
-        const addUser = await authModels.addUser(user);
+        const addUser = await User.add(user);
 
         // hash instance of password
-        const { password } = await authModels.findBy(addUser[0]).first();
+        const { password } = await User.findBy({ id: addUser[0] });
 
         //Compare password
         const hash = bcrypt.compareSync("abc1234", password);
@@ -83,12 +82,15 @@ describe("Add New user", () => {
 describe("FindBy Module", () => {
     test("should Test the findByModule", async () => {
         const lesley = { first_name: "Lesley", last_name: "banadzem" };
-        const user = await authModels.findBy(lesley);
+        const user = await User.findBy({
+            first_name: "Lesley",
+            last_name: "banadzem"
+        });
 
         expect(user).toBeDefined();
-        expect(user[0]).toHaveProperty("email", "id", "passport");
-        expect(user[0]).toHaveProperty("email", "lesley@carpal.com");
-        expect(user[0].password).not.toBe("mnop456");
+        expect(user).toHaveProperty("email", "id", "passport");
+        expect(user).toHaveProperty("email", "lesley@carpal.com");
+        expect(user.password).not.toBe("mnop456");
     });
 });
 
