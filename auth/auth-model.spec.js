@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const db = require("../database/db-config");
 const authModels = require("./auth-model");
-const { Models } = require("./../ModelClass/Models");
+const { Models } = require("./../Classes/Models");
 const models = new Models("users");
 
 beforeEach(async () => {
