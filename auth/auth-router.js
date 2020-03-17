@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { jwtSecret } = require("../config/secrets");
 const { Models } = require("../ModelClass/Models");
+const { verifyToken, validateUserToken } = require('../Middleware/auth')
 
 const users = new Models("users");
 
@@ -22,7 +23,7 @@ router.post("/login", async (req, res, next) => {
         const { email, password } = req.body;
         const user = await users.findBy({ email }).first();
         const passwordValid = bcrypt.compareSync(password, user.password);
-
+        console.log(user, passwordValid)
         if (user && passwordValid) {
             const token = generateToken(user);
             res.status(200).json({ id: user.id, email: user.email, token });
@@ -31,6 +32,16 @@ router.post("/login", async (req, res, next) => {
         }
     } catch (err) {
         next(err);
+    }
+});
+
+
+router.get("/", verifyToken(), validateUserToken(), async (req, res, next) => {
+    try {
+        res.json(req.user)
+    }
+    catch (err) {
+        next(err)
     }
 });
 
