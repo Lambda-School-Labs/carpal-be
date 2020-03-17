@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(cors());
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
     res.json({
         message: "Welcome Carpalers"
     });
@@ -23,8 +23,13 @@ app.get("/", function(req, res) {
 app.use("/auth", authRouter);
 app.use("/locations", locationRouter);
 
+// app.use((err, req, res, next) => {
+//     console.log(err)
+//     res.status(500).json({ message: 'internal error' })
+// })
+
 if (!module.parent) {
-    app.listen(PORT, function() {
+    app.listen(PORT, function () {
         console.log(`App listening to http://${HOST}:${PORT}`);
     });
 }
