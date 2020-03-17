@@ -1,3 +1,9 @@
+const jwt = require('jsonwebtoken')
+const { Models } = require('../ModelClass/Models')
+const { jwtSecret } = require('../config/secrets')
+
+const users = new Models('users')
+
 const verifyToken = () => {
     return (req, res, next) => {
         try {
@@ -31,6 +37,7 @@ const validateUserToken = () => {
         }
     }
 }
+
 
 module.exports = {
     verifyToken,
