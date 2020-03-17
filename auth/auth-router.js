@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { jwtSecret } = require("../config/secrets");
 const { Models } = require("../ModelClass/Models");
+const { verifyToken, validateUserToken } = require('../Middleware/auth')
 
 const users = new Models("users");
 
@@ -34,39 +35,6 @@ router.post("/login", async (req, res, next) => {
     }
 });
 
-const verifyToken = () => {
-    return (req, res, next) => {
-        try {
-            const token = req.headers.authorization;
-            const decoded = jwt.verify(token, jwtSecret);
-            if (token && decoded) {
-                req.decoded = decoded;
-                next();
-            } else {
-                return res.status(401).json({ message: "You are not authorized" });
-            }
-        } catch (err) {
-            next(err);
-        }
-    }
-}
-
-const validateUserToken = () => {
-    return async (req, res, next) => {
-        const id = req.decoded.subject;
-        if (id) {
-            const user = await users.findBy({ id });
-            if (user) {
-                req.user = user;
-                next();
-            } else {
-                return res.status(404).json({ message: "User not found" });
-            }
-        } else {
-            return res.status(401).json({ message: "You are not authorized" });
-        }
-    }
-}
 
 router.get("/", verifyToken(), validateUserToken(), async (req, res, next) => {
     try {
@@ -76,8 +44,6 @@ router.get("/", verifyToken(), validateUserToken(), async (req, res, next) => {
         next(err)
     }
 });
-
-
 
 function generateToken(user) {
     const payload = {
@@ -89,10 +55,5 @@ function generateToken(user) {
     };
     return jwt.sign(payload, jwtSecret, options);
 }
-
-
-
-
-
 
 module.exports = router;
