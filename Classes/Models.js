@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 
 class Models {
     constructor(name) {
+        //add db name dynamically when initialized
         this.name = name;
     }
 
@@ -17,9 +18,6 @@ class Models {
     }
 
     add(item) {
-        if (this.name === "users") {
-            item.password = bcrypt.hashSync(item.password, 12);
-        }
         return db(this.name)
             .insert(item)
             .returning("*");

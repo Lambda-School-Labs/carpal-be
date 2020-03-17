@@ -4,6 +4,7 @@ const { Models } = require("./Models");
 class FavoriteLocations extends Models {
     constructor(name) {
         super(name);
+        //hard code value to db since we won't be changing it
         this.name = "favorite_locations";
     }
     getFavorites(user_id) {

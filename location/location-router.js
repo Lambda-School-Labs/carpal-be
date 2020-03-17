@@ -6,8 +6,10 @@ const router = express.Router();
 
 const { verifyToken, validateUserToken } = require("../Middleware/auth");
 
+//new locations DB class
 const locations = new Models("locations");
 
+//new favorite locations DB class
 const FaveLocations = new FavoriteLocations();
 
 router.get("/", async (req, res, next) => {
