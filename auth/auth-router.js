@@ -42,6 +42,27 @@ router.get("/", verifyToken(), validateUserToken(), async (req, res, next) => {
     }
 });
 
+router.put('/update', verifyToken(), validateUserToken(), async (req, res, next) => {
+    try {
+        const user_id = req.user.id
+        const payload = req.body
+        res.json(await users.update(user_id, payload))
+    }
+    catch (err) {
+        next(err)
+    }
+})
+
+router.delete('/delete', verifyToken(), validateUserToken(), async (req, res, next) => {
+    try {
+        const user_id = req.user.id
+        res.json(await users.delete(user_id))
+    }
+    catch (err) {
+        next(err)
+    }
+})
+
 function generateToken(user) {
     const payload = {
         subject: user.id,

@@ -34,7 +34,7 @@ router.get(
 );
 
 //needs middleware validation for valid ID
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", verifyToken(), validateUserToken(), async (req, res, next) => {
     try {
         res.json(await locations.findBy({ id: req.params.id }));
     } catch (err) {
@@ -43,7 +43,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //needs middleware validation for req.body
-router.post("/", async (req, res, next) => {
+router.post("/", verifyToken(), validateUserToken(), async (req, res, next) => {
     try {
         res.status(201).json(await locations.add(req.body));
     } catch (err) {
@@ -52,7 +52,7 @@ router.post("/", async (req, res, next) => {
 });
 
 //needs middleware validation for req.body and id
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", verifyToken(), validateUserToken(), async (req, res, next) => {
     try {
         res.json(await locations.update(req.params.id, req.body));
     } catch (err) {
@@ -61,7 +61,7 @@ router.put("/:id", async (req, res, next) => {
 });
 
 //needs middleware validation for valid ID
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", verifyToken(), validateUserToken(), async (req, res, next) => {
     try {
         res.json(await locations.delete(req.params.id));
     } catch (err) {

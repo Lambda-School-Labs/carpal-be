@@ -5,9 +5,9 @@ exports.seed = function (knex) {
     .then(function () {
       // Inserts seed entries
       return knex('audio').insert([
-        { id: 1, name: 'country' },
-        { id: 2, name: 'rock' },
-        { id: 3, name: 'metal' }
+        { name: 'country' },
+        { name: 'rock' },
+        { name: 'metal' }
       ]);
     });
 };
