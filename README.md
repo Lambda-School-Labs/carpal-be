@@ -14,59 +14,61 @@ To get the server running locally:
 
 🚫 adjust these scripts to match your project
 
--   Clone this repo
--   **yarn install** to install all required dependencies
--   **yarn server** to start the local server
--   **yarn test** to start server using testing environment
+-   Clone this repo and cd into carpal-be directory
+-   **npm install** to install all required dependencies 
+-   **npm run server** to start the local server
+-   **npm run test** to start server using testing environment
 
 ### Backend framework goes here
 
 🚫 Why did you choose this framework?
 
--   Point One
--   Point Two
--   Point Three
--   Point Four
+-   Simplicity
+-   Minimal lines of code
+-   Flexible
+-   Scalable 
 
 ## 2️⃣ Endpoints
 
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
+🚫This is a placeholder, replace the endpoints, access control, and description to match your project
 
-#### Organization Routes
+#### Location Routes
 
 | Method | Endpoint                | Access Control | Description                                  |
 | ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+| GET    | `/locations`            | all users      | Returns all locations entered by all users   |
+| GET    | `/locations/favorites`  | owner          | Returns favorirted locations for a user      |
+| GET    | `/locations/:id`        | owner          | Returns a single location entered by user    |
+| POST    | `/locations`           | owner          | Allows user to enter in a new location       |
+| PUT    | `/locations/:id`        | owner          | Allows user to enter to update a location    |
+| DELETE | `/locations/:id`        | owner          | Delete a location                            |
 
 #### User Routes
 
 | Method | Endpoint                | Access Control      | Description                                        |
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
+| POST    | `/auth/register`       | all users           | Allows user to create an account                   |
+| POST    | `/auth/login`          | all users           | Allows user to authenticate and log into account   |
+| GET    | `/auth`                 | all users           | Allows for user retrieval from a token             |
+| PUT    | `/auth/update`          | owner               | Allows user to update their account                |
+| DELETE | `/auth/delete`          | owner               | Allows user to delete their account                |
 
 # Data Model
 
 🚫This is just an example. Replace this with your data model
 
-#### 2️⃣ ORGANIZATIONS
+#### 2️⃣ LOCATIONS
 
 ---
 
 ```
 {
-  id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
+  "id": 4,
+  "name": "in-n-out",
+  "address": "2213 Home Way",
+  "zip_code": 92121,
+  "city": "san diego",
+  "state": "CA"
 }
 ```
 
@@ -76,17 +78,19 @@ To get the server running locally:
 
 ```
 {
-  id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
-  email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
+  "id": 10,
+  "first_name": "panda",
+  "last_name": "express",
+  "email": "pandaboiii@carpal.com",
+  "password": "$2a$12$Wt04y4O7TUJrspSYCgbNseFg.JpEXZ995n5x1V3LMvugRXLx9MfHi",
+  "is_driver": false,
+  "phone_number": "3324343433",
+  "created_at": "2020-03-17T00:21:48.597Z",
+  "zip_code": 55343,
+  "is_admin": false,
+  "is_disabled": false,
+  "bio": null,
+  "profile_picture": null
 }
 ```
 
@@ -94,35 +98,29 @@ To get the server running locally:
 
 🚫 This is an example, replace this with the actions that pertain to your backend
 
-`getOrgs()` -> Returns all organizations
+`findBy(filter)` -> find a single item using a filter (ie email, address, etc.)
 
-`getOrg(orgId)` -> Returns a single organization by ID
+`findAll()` -> Returns all from requested database
 
-`addOrg(org)` -> Returns the created org
+`add(item)` -> Add a record to requested database
 
-`updateOrg(orgId)` -> Update an organization by ID
+`update(id, item)` -> Update a location using the id from req.params
 
-`deleteOrg(orgId)` -> Delete an organization by ID
+`delete(id)` -> Delete a record using id from req.params
 <br>
 <br>
 <br>
-`getUsers(orgId)` -> if no param all users
+`verifyToken()` -> verifies that user is authorized. Checks if they have a token
 
-`getUser(userId)` -> Returns a single user by user ID
+`validateUserToken()` -> Returns user information from token
 
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
-
-`updateUser(userId, changes object)` -> Updates a single user by ID.
-
-`deleteUser(userId)` -> deletes everything dependent on the user
 
 ## 3️⃣ Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
-
-    *DB_HOST - Hostname for local Postgres instance(likely localhost)
+    *DATABASE_URL - URL for postgres database
     *DB - Connection for local Postgres DB instance
     *DB_TEST - Connection for local Postgres DB instance
     *USER - Reflect what is setup in pgAdmin in your local environment

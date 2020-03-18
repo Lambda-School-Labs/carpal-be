@@ -17,7 +17,7 @@ exports.up = async function (knex) {
     await knex.schema.createTable('locations', tbl => {
         tbl.increments()
         tbl.string('name').notNullable()
-        tbl.string('address').unique().notNullable()
+        tbl.string('address').notNullable()
         tbl.integer('zip_code').notNullable()
         tbl.string('city').notNullable()
         tbl.string('state').notNullable()

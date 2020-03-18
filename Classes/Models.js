@@ -17,10 +17,11 @@ class Models {
         return db(this.name).select("*");
     }
 
-    add(item) {
-        return db(this.name)
+    async add(item) {
+        const [location] = await db(this.name)
             .insert(item)
             .returning("*");
+        return location
     }
 
     update(id, item) {
