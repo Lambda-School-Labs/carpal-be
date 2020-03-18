@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const passport = require('passport')
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const { jwtSecret } = require("../config/secrets");
 const { Models } = require("../Classes/Models");
 const { verifyToken, validateUserToken } = require("../Middleware/auth");
@@ -41,6 +43,19 @@ router.get("/", verifyToken(), validateUserToken(), async (req, res, next) => {
         next(err);
     }
 });
+
+//GOOGLE AUTH
+
+router.get('/google', passport.authenticate('google', { scope: 'https://www.google.com/m8/feeds' }));
+
+router.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: 'https://www.letscarpal.com' }),
+    function (req, res) {
+
+        res.redirect('https://www.letscarpal.com');
+    });
+
+
 
 router.put('/update', verifyToken(), validateUserToken(), async (req, res, next) => {
     try {
