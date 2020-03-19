@@ -1,5 +1,4 @@
 const db = require("../database/db-config");
-const bcrypt = require("bcryptjs");
 
 class Models {
     constructor(name) {
@@ -17,10 +16,11 @@ class Models {
         return db(this.name).select("*");
     }
 
-    add(item) {
-        return db(this.name)
+    async add(item) {
+        const [addedItem] = await db(this.name)
             .insert(item)
             .returning("*");
+        return addedItem;
     }
 
     update(id, item) {
