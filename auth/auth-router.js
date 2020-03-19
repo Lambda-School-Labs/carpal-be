@@ -2,13 +2,27 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const passport = require('passport')
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
+const passport = require("passport");
 const { jwtSecret } = require("../config/secrets");
-const { Models } = require("../Classes/Models");
+const { Users } = require("../Classes/Users");
 const { verifyToken, validateUserToken } = require("../Middleware/auth");
+const googleStrat = require("../config/google-strategy");
 
-const users = new Models("users");
+const users = new Users();
+
+passport.use(googleStrat);
+
+//needed for passport, have to be called for passport
+passport.serializeUser((user, cb) => {
+    cb(null, user);
+});
+
+passport.deserializeUser((user, cb) => {
+    cb(null, user);
+});
+
+//initialize passport
+router.use(passport.initialize());
 
 //Add catch for different type of missing request body
 router.post("/register", async (req, res, next) => {
@@ -46,37 +60,90 @@ router.get("/", verifyToken(), validateUserToken(), async (req, res, next) => {
 
 //GOOGLE AUTH
 
-router.get('/google', passport.authenticate('google', { scope: 'https://www.google.com/m8/feeds' }));
-
-router.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: 'https://www.letscarpal.com' }),
-    function (req, res) {
-
-        res.redirect('https://www.letscarpal.com');
-    });
-
-
-
-router.put('/update', verifyToken(), validateUserToken(), async (req, res, next) => {
-    try {
-        const user_id = req.user.id
-        const payload = req.body
-        res.json(await users.update(user_id, payload))
+router.get(
+    "/google",
+    passport.authenticate("google", {
+        scope: ["email", "profile"]
+    })
+);
+//GOOGLE AUTH
+router.get(
+    "/google/callback",
+    passport.authenticate("google", {
+        failureRedirect: "https://www.letscarpal.com"
+    }),
+    function(req, res) {
+        res.redirect("https://www.letscarpal.com");
     }
-    catch (err) {
-        next(err)
-    }
-})
+);
 
-router.delete('/delete', verifyToken(), validateUserToken(), async (req, res, next) => {
-    try {
-        const user_id = req.user.id
-        res.json(await users.delete(user_id))
+//Staging front-end test
+router.get(
+    "/google/staging",
+    passport.authenticate("google", {
+        scope: ["email", "profile"]
+    })
+);
+//Staging front-end test
+router.get(
+    "/google/staging/callback",
+    passport.authenticate("google", {
+        failureRedirect: "https://staging.d3ic1rxl46vguk.amplifyapp.com/"
+    }),
+    function(req, res) {
+        res.redirect("https://staging.d3ic1rxl46vguk.amplifyapp.com/");
     }
-    catch (err) {
-        next(err)
+);
+
+//testing front-end test
+router.get(
+    "/google/testing",
+    passport.authenticate("google", {
+        session: false,
+        scope: ["email", "profile"]
+    })
+);
+//testing front-end test
+router.get(
+    "/google/testing/callback",
+    passport.authenticate("google", {
+        failureRedirect: "http://localhost:3000/"
+    }),
+    function(req, res) {
+        const token = generateToken(req.user);
+        res.cookie("auth", token);
+        res.redirect("http://localhost:3000/");
     }
-})
+);
+
+router.put(
+    "/update",
+    verifyToken(),
+    validateUserToken(),
+    async (req, res, next) => {
+        try {
+            const user_id = req.user.id;
+            const payload = req.body;
+            res.json(await users.update(user_id, payload));
+        } catch (err) {
+            next(err);
+        }
+    }
+);
+
+router.delete(
+    "/delete",
+    verifyToken(),
+    validateUserToken(),
+    async (req, res, next) => {
+        try {
+            const user_id = req.user.id;
+            res.json(await users.delete(user_id));
+        } catch (err) {
+            next(err);
+        }
+    }
+);
 
 function generateToken(user) {
     const payload = {

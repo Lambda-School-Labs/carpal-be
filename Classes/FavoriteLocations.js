@@ -22,6 +22,15 @@ class FavoriteLocations extends Models {
                 "l.zip_code"
             );
     }
+    async add(user_id, location_id) {
+        const [addedLocation] = await db(this.name)
+            .insert({
+                user_id,
+                location_id
+            })
+            .returning("*");
+        return addedLocation;
+    }
 }
 
 module.exports = { FavoriteLocations };
