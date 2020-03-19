@@ -43,12 +43,13 @@ router.post(
 );
 
 router.delete(
-    "/delete/:id",
+    "/delete/:locationId",
     verifyToken(),
     validateUserToken(),
     async (req, res, next) => {
         try {
-            res.json(await FaveLocations.delete(req.params.id));
+            //join tables don't create ID's
+            res.json(await FaveLocations.delete(req.user.id, req.params.locationId));
         } catch (err) {
             next(err);
         }

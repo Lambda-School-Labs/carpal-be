@@ -23,11 +23,12 @@ class Models {
         return addedItem;
     }
 
-    update(id, item) {
-        return db(this.name)
+    async update(id, item) {
+        await db(this.name)
             .where({ id })
             .update(item)
             .returning("*");
+        return this.findBy({ id });
     }
 
     delete(id) {

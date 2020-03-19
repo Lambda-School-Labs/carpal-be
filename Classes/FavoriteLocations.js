@@ -15,7 +15,6 @@ class FavoriteLocations extends Models {
             .select(
                 "u.id as userId",
                 "l.name",
-                "l.name",
                 "l.address",
                 "l.city",
                 "l.state",
@@ -30,6 +29,13 @@ class FavoriteLocations extends Models {
             })
             .returning("*");
         return addedLocation;
+    }
+
+    //join tables won't create a normal id so we pass in the exact object we want to delete
+    delete(user_id, location_id) {
+        return db(this.name)
+            .where({ user_id, location_id })
+            .del();
     }
 }
 

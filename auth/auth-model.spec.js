@@ -48,17 +48,12 @@ describe("Add New user", () => {
         expect(findBy).toBeFalsy();
     });
     test("Add new user", async () => {
-        const user = newUser();
-        const addUser = await User.add(user);
+        const addUser = await User.add(newUser());
 
-        // hash instance of password
-        const { password } = await User.findBy({ id: addUser[0] });
-
-        expect(addUser).toHaveLength(1);
         expect(addUser).not.toBeFalsy();
-        expect(addUser[0].password).toBeUndefined();
-        expect(User.findBy({ id: addUser[0] })).toBeTruthy();
-        expect(password).not.toBe("abc1234");
+        expect(addUser.password).toBeUndefined();
+        expect(User.findBy({ id: addUser.id })).toBeTruthy();
+        expect(addUser.first_name).toBe("Hira");
     });
 
     test("test for password hash", async () => {
@@ -66,7 +61,7 @@ describe("Add New user", () => {
         const addUser = await User.add(user);
 
         // hash instance of password
-        const { password } = await User.findBy({ id: addUser[0] });
+        const { password } = await User.findBy({ id: addUser.id });
 
         //Compare password
         const hash = bcrypt.compareSync("abc1234", password);
@@ -98,7 +93,6 @@ describe("FindBy Module", () => {
 //Verify why adding a new user without id throws an error
 function newUser() {
     return {
-        id: 4,
         first_name: "Hira",
         last_name: "Khan",
         email: "hira.khan@carpal.com",

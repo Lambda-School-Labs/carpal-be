@@ -1,6 +1,6 @@
 const { Models } = require("../Classes/Models");
 const express = require("express");
-const favoritesRouter = require("./favorite-locations");
+const favoritesRouter = require("./favorite-locations-router");
 const router = express.Router();
 const { checkBody } = require("../Middleware/locations");
 const { verifyToken, validateUserToken } = require("../Middleware/auth");
