@@ -45,7 +45,19 @@ function validateLoginReqBody() {
         const { email, password } = req.body;
         if (!email || !password) {
             res.status(400).json({
-                message: "Email or Password is invalid"
+                message: "Email or Password is undefined"
+            });
+        } else {
+            next();
+        }
+    };
+}
+function validateRegisterReqBody() {
+    return (req, res, next) => {
+        const { email, password, first_name, last_name, phone_number, zip_code } = req.body;
+        if (!email || !password || !first_name || !last_name || !phone_number || !zip_code ) {
+            return res.status(400).json({
+                message: "Fill in all required fields"
             });
         } else {
             next();
@@ -57,6 +69,7 @@ function userExist() {
     return async (req, res, next) => {
         const { email, password } = req.body;
         const user = await users.findBy({ email });
+
         if (user) {
             req.data = {
                 exist: true,
@@ -64,9 +77,10 @@ function userExist() {
             };
             next();
         } else {
-            res.status(400).json({
-                message: `User with the email of ${email} doesn't not exist in the system.`
-            })
+            req.data = {
+                user: user
+            }
+           next();
         }
     };
 }
@@ -75,5 +89,6 @@ module.exports = {
     verifyToken,
     validateUserToken,
     validateLoginReqBody,
-    userExist
+    userExist,
+    validateRegisterReqBody
 };
