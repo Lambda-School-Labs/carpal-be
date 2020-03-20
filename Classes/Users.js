@@ -9,40 +9,32 @@ class Users extends Models {
         this.name = "users";
     }
 
+    //we don't want to return a users' password on a successful add
+    findById(id) {
+        return db(this.name)
+            .where({ id })
+            .first(
+                "id",
+                "first_name",
+                "last_name",
+                "email",
+                "is_driver",
+                "phone_number",
+                "zip_code",
+                "is_admin",
+                "is_disabled",
+                "bio",
+                "profile_picture"
+            );
+    }
+
     //Override add method in Models to return everything but password and hash password before inserting
     async add(item) {
         item.password = bcrypt.hashSync(item.password, 12);
-        const [user] = await db(this.name)
+        const [newUser] = await db(this.name)
             .insert(item)
-            .returning("*");
-
-        const {
-            id,
-            first_name,
-            last_name,
-            email,
-            is_driver,
-            phone_number,
-            zip_code,
-            is_admin,
-            is_disabled,
-            bio,
-            profile_picture
-        } = user;
-
-        return {
-            id,
-            first_name,
-            last_name,
-            email,
-            is_driver,
-            phone_number,
-            zip_code,
-            is_admin,
-            is_disabled,
-            bio,
-            profile_picture
-        };
+            .returning("id");
+        return this.findById(newUser);
     }
     //Override the findAll method in Models to avoid returning all users' passwords back
     findAll() {

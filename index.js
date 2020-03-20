@@ -14,6 +14,8 @@ app.use(express.json());
 app.use(helmet());
 app.use(cors());
 
+app.enable('trust proxy');
+
 app.get("/", function (req, res) {
     res.json({
         message: "Welcome Carpalers"

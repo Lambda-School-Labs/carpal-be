@@ -116,7 +116,7 @@ router.get(
 );
 //Staging front-end test
 router.get(
-    "/google/staging/callback",
+    "/google/callback/staging",
     passport.authenticate("google", {
         failureRedirect: "https://staging.d3ic1rxl46vguk.amplifyapp.com/"
     }),
@@ -135,7 +135,7 @@ router.get(
 );
 //testing front-end test
 router.get(
-    "/google/testing/callback",
+    "/google/callback/testing",
     passport.authenticate("google", {
         failureRedirect: "http://localhost:3000/"
     }),
