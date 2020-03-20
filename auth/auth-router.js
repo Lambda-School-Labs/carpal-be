@@ -24,7 +24,7 @@ passport.deserializeUser((user, cb) => {
 //initialize passport
 router.use(passport.initialize());
 
-router.enable('trust proxy', 1);
+router.enable('trust proxy');
 
 router.use(express.session({
     secret : process.env.sessionSecret,
