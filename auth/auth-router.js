@@ -5,7 +5,12 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const { jwtSecret } = require("../config/secrets");
 const { Users } = require("../Classes/Users");
-const { verifyToken, validateUserToken } = require("../Middleware/auth");
+const {
+    verifyToken,
+    validateUserToken,
+    validateLoginReqBody,
+    userExist
+} = require("../Middleware/auth");
 const googleStrat = require("../config/google-strategy");
 
 const users = new Users();
@@ -34,10 +39,12 @@ router.post("/register", async (req, res, next) => {
     }
 });
 
-router.post("/login", async (req, res, next) => {
+router.post("/login", userExist(), validateLoginReqBody(), async (req, res, next) => {
+
     try {
         const { email, password } = req.body;
-        const user = await users.findBy({ email }).first();
+        //Re-assign the user object to req.data. from the userexist middleware
+        const user = req.data.user;
         const passwordValid = bcrypt.compareSync(password, user.password);
         if (user && passwordValid) {
             const token = generateToken(user);
