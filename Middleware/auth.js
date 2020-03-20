@@ -54,8 +54,8 @@ function validateLoginReqBody() {
 }
 function validateRegisterReqBody() {
     return (req, res, next) => {
-        const { email, password, first_name, last_name, phone_number, zip_code } = req.body;
-        if (!email || !password || !first_name || !last_name || !phone_number || !zip_code ) {
+        const { email, password, first_name, last_name,  } = req.body;
+        if (!email || !password || !first_name || !last_name) {
             return res.status(400).json({
                 message: "Fill in all required fields"
             });
