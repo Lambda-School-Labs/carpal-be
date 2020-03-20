@@ -24,6 +24,17 @@ passport.deserializeUser((user, cb) => {
 //initialize passport
 router.use(passport.initialize());
 
+router.enable('trust proxy', 1);
+
+router.use(express.session({
+    secret : process.env.sessionSecret,
+    key : 'sid',
+    proxy : true, // add this when behind a reverse proxy, if you need secure cookies
+    cookie : {
+        secure : true,
+    }
+}));
+
 //Add catch for different type of missing request body
 router.post("/register", async (req, res, next) => {
     try {
