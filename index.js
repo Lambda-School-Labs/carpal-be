@@ -1,6 +1,7 @@
 const express = require("express");
 const authRouter = require("./auth/auth-router");
 const locationRouter = require("./location/location-router");
+const usersRouter = require("./user/user-router");
 const PORT = process.env.PORT || 3001;
 const HOST = process.env.HOST || "localhost";
 
@@ -24,11 +25,12 @@ app.get("/", function (req, res) {
 
 app.use("/auth", authRouter);
 app.use("/locations", locationRouter);
+app.use("/users", usersRouter);
 
-// app.use((err, req, res, next) => {
-//     console.log(err)
-//     res.status(500).json({ message: 'internal error' })
-// })
+app.use((err, req, res, next) => {
+    console.log(err)
+    res.status(500).json({ message: 'internal error' })
+})
 
 if (!module.parent) {
     app.listen(PORT, function () {
