@@ -19,12 +19,8 @@ describe("Location Route", () => {
         expect(res.status).toBe(200);
         expect(res.type).toEqual("application/json");
         expect(res.body).toMatchObject({
-            id: 1,
-            name: "home",
-            address: "4239 longfoot way",
-            city: "san jose",
-            state: "ca",
-            zip_code: 95135
+            lat:39.385348651562, 
+            long: -99.797763874469
         });
     });
 
@@ -32,36 +28,30 @@ describe("Location Route", () => {
         const res = await supertest(server)
             .post("/locations")
             .send({
-                name: "test place",
-                address: "844 testers lane",
-                city: "test city",
-                state: "ts",
-                zip_code: 94412
+              lat:33.394348176013,
+              long:-80.464474764805
             })
             .set({ authorization: user.body.token });
 
         expect(res.status).toBe(201);
         expect(res.type).toEqual("application/json");
-        expect(res.body).toHaveProperty("name", "test place");
+        expect(res.body).toHaveProperty("lat", 33.394348176013);
     });
 
     test("Update location", async () => {
         const newLocation = {
-            name: "The spot",
-            address: "250 test ave",
-            city: "Morgantown",
-            state: "WV",
-            zip_code: "25091"
+            lat: 33.394348176013,
+            long:-80.464474764805
         };
         const res = await supertest(server)
-            .put("/locations/favorites/update/3")
+            .put("/locations/2")
             .send(newLocation)
             .set({ authorization: user.body.token });
 
         expect(res.status).toBe(200);
         expect(res.type).toEqual("application/json");
-        expect(res.body).toHaveProperty("name", "The spot");
-        expect(res.body).toHaveProperty("city", "Morgantown");
+        expect(res.body).toHaveProperty("lat",33.394348176013);
+        expect(res.body).toHaveProperty("long", -80.464474764805);
     });
 
     test("Delete location", async () => {
