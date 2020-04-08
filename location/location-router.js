@@ -47,7 +47,6 @@ router.post(
     }
 );
 
-//needs middleware validation for req.body and id
 router.put(
     "/:id",
     checkBody(),

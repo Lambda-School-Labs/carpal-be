@@ -20,24 +20,17 @@ describe("Favorite locations", () => {
 
         expect(res.status).toBe(200);
         expect(res.type).toEqual("application/json");
-        expect(res.body[0]).toHaveProperty(
-            "name",
-            "address",
-            "city",
-            "state",
-            "zip_code"
-        );
+        expect(res.body[0]).toHaveProperty("lat", 39.385348651562);
+        expect(res.body[0]).toHaveProperty("name", "Gym");
     });
 
     test("Add favorite location to user", async () => {
         const res = await supertest(server)
             .post("/locations/favorites/add")
             .send({
-                name: "home",
-                address: "250 test st",
-                city: "roanoke",
-                state: "va",
-                zip_code: "24012"
+                lat: 38.384318267773,
+                long: -80.537760659361,
+                name: "Burger King"
             })
             .set({ authorization: user.body.token });
 
@@ -49,7 +42,7 @@ describe("Favorite locations", () => {
 
     test("Delete favorite location", async () => {
         const res = await supertest(server)
-            .delete("/locations/favorites/delete/3")
+            .delete("/locations/favorites/delete/1")
             .set({ authorization: user.body.token });
 
         expect(res.status).toBe(200);
@@ -59,20 +52,18 @@ describe("Favorite locations", () => {
 
     test("Update favorite location", async () => {
         const newLocation = {
-            name: "The spot",
-            address: "250 test ave",
-            city: "Morgantown",
-            state: "WV",
-            zip_code: "25091"
+            lat: 38.384318267773,
+            long: -80.537760659361,
+            name: "Burger King"
         };
         const res = await supertest(server)
-            .put("/locations/favorites/update/3")
+            .put("/locations/favorites/update/Gym")
             .send(newLocation)
             .set({ authorization: user.body.token });
 
         expect(res.status).toBe(200);
         expect(res.type).toEqual("application/json");
-        expect(res.body).toHaveProperty("name", "The spot");
-        expect(res.body).toHaveProperty("city", "Morgantown");
+        expect(res.body).toHaveProperty("name", "Burger King");
+        expect(res.body).toHaveProperty("lat", 38.384318267773);
     });
 });
