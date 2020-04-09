@@ -1,9 +1,8 @@
 const { Models } = require("../Classes/Models");
 const express = require("express");
-const favoritesRouter = require("./favorite-locations");
+const favoritesRouter = require("./favorite-locations-router");
 const router = express.Router();
 const { checkBody } = require("../Middleware/locations");
-const { verifyToken, validateUserToken } = require("../Middleware/auth");
 
 //new locations DB class
 const locations = new Models("locations");
@@ -21,8 +20,6 @@ router.get("/", async (req, res, next) => {
 //needs middleware validation for valid ID
 router.get(
     "/:id",
-    verifyToken(),
-    validateUserToken(),
     async (req, res, next) => {
         try {
             res.json(await locations.findBy({ id: req.params.id }));
@@ -36,8 +33,6 @@ router.get(
 router.post(
     "/",
     checkBody(),
-    verifyToken(),
-    validateUserToken(),
     async (req, res, next) => {
         try {
             res.status(201).json(await locations.add(req.body));
@@ -47,12 +42,9 @@ router.post(
     }
 );
 
-//needs middleware validation for req.body and id
 router.put(
     "/:id",
     checkBody(),
-    verifyToken(),
-    validateUserToken(),
     async (req, res, next) => {
         try {
             res.json(await locations.update(req.params.id, req.body));
@@ -65,8 +57,6 @@ router.put(
 //needs middleware validation for valid ID
 router.delete(
     "/:id",
-    verifyToken(),
-    validateUserToken(),
     async (req, res, next) => {
         try {
             res.json(await locations.delete(req.params.id));

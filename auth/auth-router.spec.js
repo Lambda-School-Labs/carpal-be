@@ -12,20 +12,7 @@ describe("Test Register endpoint", () => {
             .send(newUser());
         expect(response.status).toBe(201);
         expect(response.type).toEqual("application/json");
-
-        expect(response.body[0]).toHaveProperty(
-            "first_name",
-            "last_name",
-            "email",
-            "password",
-            "is_driver",
-            "phone_number",
-            "zip_code",
-            "is_admin",
-            "is_disabled",
-            "bio",
-            "profile_picture"
-        );
+        expect(response.body.first_name).toBe("Ruth");
     });
 });
 describe("Test Login endpoint", () => {
@@ -41,7 +28,8 @@ describe("Test Login endpoint", () => {
 
         expect(response.status).toBe(200);
         expect(response.type).toEqual("application/json");
-        expect(response.body).toHaveProperty("id", "token", "email");
+        expect(response.body).toHaveProperty("id", 1);
+        expect(response.body).toHaveProperty("email", "dang@carpal.com");
     });
 
     test("Get user from token", async () => {
@@ -71,7 +59,6 @@ describe("Test Login endpoint", () => {
 //New user to register
 function newUser() {
     return {
-        id: 4,
         first_name: "Ruth",
         last_name: "Poliakon",
         email: "ruth.pol@carpal.com",

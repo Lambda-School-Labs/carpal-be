@@ -7,7 +7,9 @@
         "test": "cross-env NODE_ENV=testing jest --coverage --verbose --watch --runInBand",
         "server": "cross-env NODE_ENV=testing nodemon index.js",
         "start": "node index.js",
-        "coverage": "jest --coverage  --detectOpenHandles --forceExit || true"
+        "coverage": "jest --coverage  --detectOpenHandles --forceExit || true",
+        "seed": "npx knex seed:run ",
+        "migrate": "npx knex migrate:latest"
     },
     "repository": {
         "type": "git",

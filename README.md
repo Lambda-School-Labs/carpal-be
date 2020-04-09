@@ -26,6 +26,7 @@ To get the server running locally:
 
 ### Backend framework goes here
 
+### Express.js
 🚫 Why did you choose this framework?
 
 -   Simplicity
@@ -42,9 +43,8 @@ To get the server running locally:
 | Method | Endpoint                | Access Control | Description                                  |
 | ------ | ----------------------- | -------------- | -------------------------------------------- |
 | GET    | `/locations`            | all users      | Returns all locations entered by all users   |
-| GET    | `/locations/favorites`  | owner          | Returns favorirted locations for a user      |
 | GET    | `/locations/:id`        | owner          | Returns a single location entered by user    |
-| POST    | `/locations`           | owner          | Allows user to enter in a new location       |
+| POST   | `/locations`            | owner          | Allows user to enter in a new location       |
 | PUT    | `/locations/:id`        | owner          | Allows user to enter to update a location    |
 | DELETE | `/locations/:id`        | owner          | Delete a location                            |
 
@@ -52,11 +52,20 @@ To get the server running locally:
 
 | Method | Endpoint                | Access Control      | Description                                        |
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| POST    | `/auth/register`       | all users           | Allows user to create an account                   |
-| POST    | `/auth/login`          | all users           | Allows user to authenticate and log into account   |
+| POST   | `/auth/register`        | all users           | Allows user to create an account                   |
+| POST   | `/auth/login`           | all users           | Allows user to authenticate and log into account   |
 | GET    | `/auth`                 | all users           | Allows for user retrieval from a token             |
-| PUT    | `/auth/update`          | owner               | Allows user to update their account                |
-| DELETE | `/auth/delete`          | owner               | Allows user to delete their account                |
+| PUT    | `/users/update`         | owner               | Allows user to update their account                |
+| DELETE | `/users/delete`         | owner               | Allows user to delete their account                |
+
+### Favorite Locations Routes
+
+| Method | Endpoint                     | Access Control | Description                                  |
+| ------ | ---------------------------- | -------------- | -------------------------------------------- |
+| GET    | `/locations/favorites`       | owner          | Returns all favorite locations for a user    |
+| PUT    | `/locations/favorites/:name` | owner          | Update a user's certain favorite location    |
+| POST   | `/locations/favorites`       | owner          | Add a favorite location for a user           |
+| DELETE | `/locations/favorites/:id`   | owner          | Delete a a user's favorite location          |
 
 # Data Model
 
@@ -68,12 +77,9 @@ To get the server running locally:
 
 ```
 {
-  "id": 4,
-  "name": "in-n-out",
-  "address": "2213 Home Way",
-  "zip_code": 92121,
-  "city": "san diego",
-  "state": "CA"
+  "id": 1,
+  "lat": 39.385348651562,
+  "long": -99.797763874469
 }
 ```
 
@@ -87,7 +93,6 @@ To get the server running locally:
   "first_name": "panda",
   "last_name": "express",
   "email": "pandaboiii@carpal.com",
-  "password": "$2a$12$Wt04y4O7TUJrspSYCgbNseFg.JpEXZ995n5x1V3LMvugRXLx9MfHi",
   "is_driver": false,
   "phone_number": "3324343433",
   "created_at": "2020-03-17T00:21:48.597Z",
