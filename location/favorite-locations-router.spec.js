@@ -26,7 +26,7 @@ describe("Favorite locations", () => {
 
     test("Add favorite location to user", async () => {
         const res = await supertest(server)
-            .post("/locations/favorites/add")
+            .post("/locations/favorites")
             .send({
                 lat: 38.384318267773,
                 long: -80.537760659361,
@@ -42,7 +42,7 @@ describe("Favorite locations", () => {
 
     test("Delete favorite location", async () => {
         const res = await supertest(server)
-            .delete("/locations/favorites/delete/1")
+            .delete("/locations/favorites/1")
             .set({ authorization: user.body.token });
 
         expect(res.status).toBe(200);
