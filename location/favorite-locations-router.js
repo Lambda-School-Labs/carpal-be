@@ -20,7 +20,7 @@ router.get("/", verifyToken(), validateUserToken(), async (req, res, next) => {
 
 //middleware check for address in locations DB
 router.post(
-    "/add",
+    "/",
     checkBody(),
     verifyToken(),
     validateUserToken(),
@@ -47,7 +47,7 @@ router.post(
 );
 
 router.delete(
-    "/delete/:locationId",
+    "/:locationId",
     verifyToken(),
     validateUserToken(),
     async (req, res, next) => {
