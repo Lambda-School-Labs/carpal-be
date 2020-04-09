@@ -45,7 +45,10 @@ router.post(
                 });
             }
             const userObj = await users.add(user);
-            res.status(201).json(userObj);
+
+            const token = generateToken(userObj);
+
+            res.status(201).json({...userObj, token});
         } catch (err) {
             next(err);
         }
