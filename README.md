@@ -52,8 +52,8 @@ To get the server running locally:
 
 | Method | Endpoint                | Access Control      | Description                                        |
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| POST    | `/auth/register`       | all users           | Allows user to create an account                   |
-| POST    | `/auth/login`          | all users           | Allows user to authenticate and log into account   |
+| POST   | `/auth/register`        | all users           | Allows user to create an account                   |
+| POST   | `/auth/login`           | all users           | Allows user to authenticate and log into account   |
 | GET    | `/auth`                 | all users           | Allows for user retrieval from a token             |
 | PUT    | `/auth/update`          | owner               | Allows user to update their account                |
 | DELETE | `/auth/delete`          | owner               | Allows user to delete their account                |
@@ -64,7 +64,7 @@ To get the server running locally:
 | ------ | ---------------------------- | -------------- | -------------------------------------------- |
 | GET    | `/locations/favorites`       | owner          | Returns all favorite locations for a user    |
 | PUT    | `/locations/favorites/:name` | owner          | Update a user's certain favorite location    |
-| POST    | `/locations/favorites`      | owner          | Add a favorite location for a user           |
+| POST   | `/locations/favorites`       | owner          | Add a favorite location for a user           |
 | DELETE | `/locations/favorites/:id`   | owner          | Delete a a user's favorite location          |
 
 # Data Model
