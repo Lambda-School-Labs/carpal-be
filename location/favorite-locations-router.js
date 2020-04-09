@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const { verifyToken, validateUserToken } = require("../Middleware/auth");
 const { FavoriteLocations } = require("../Classes/FavoriteLocations");
 const { checkBody, locationCheck } = require("../Middleware/locations");
 const { Models } = require("../Classes/Models");
@@ -10,7 +9,7 @@ const FaveLocations = new FavoriteLocations();
 
 const locationModel = new Models("locations");
 
-router.get("/", verifyToken(), validateUserToken(), async (req, res, next) => {
+router.get("/", async (req, res, next) => {
     try {
         res.json(await FaveLocations.getFavorites(req.user.id));
     } catch (err) {
@@ -22,8 +21,6 @@ router.get("/", verifyToken(), validateUserToken(), async (req, res, next) => {
 router.post(
     "/",
     checkBody(),
-    verifyToken(),
-    validateUserToken(),
     locationCheck(),
     async (req, res, next) => {
         try {
@@ -48,8 +45,6 @@ router.post(
 
 router.delete(
     "/:locationId",
-    verifyToken(),
-    validateUserToken(),
     async (req, res, next) => {
         try {
             //join tables don't create ID's
@@ -67,8 +62,6 @@ router.put(
     "/update/:name",
     checkBody(),
     locationCheck(),
-    verifyToken(),
-    validateUserToken(),
     async (req, res, next) => {
         try {
             const location = {

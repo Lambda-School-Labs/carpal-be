@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const { verifyToken, validateUserToken } = require("../Middleware/auth");
 const { Users } = require("../Classes/Users");
 const { UserDetails } = require("../Classes/UserDetails");
 
@@ -11,8 +10,6 @@ const hobby = new UserDetails("hobbies", "users_hobbies");
 
 router.put(
     "/update",
-    verifyToken(),
-    validateUserToken(),
     async (req, res, next) => {
         try {
             const userBody = {
@@ -63,8 +60,6 @@ router.put(
 
 router.delete(
     "/delete",
-    verifyToken(),
-    validateUserToken(),
     async (req, res, next) => {
         try {
             const user_id = req.user.id;

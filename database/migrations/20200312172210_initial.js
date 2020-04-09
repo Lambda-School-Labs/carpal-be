@@ -13,7 +13,7 @@ exports.up = async function (knex) {
         tbl.bigInteger("phone_number").notNullable().defaultTo(555555555);
         tbl.timestamp("created_at").defaultTo(knex.fn.now());
         //default zip
-        tbl.integer("zip_code").notNullable();
+        tbl.integer("zip_code").notNullable().defaultTo(12345);
         tbl.boolean("is_admin").defaultTo(false);
         tbl.boolean("is_disabled").defaultTo(false);
         tbl.text("bio");
