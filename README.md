@@ -55,8 +55,8 @@ To get the server running locally:
 | POST    | `/auth/register`       | all users           | Allows user to create an account                   |
 | POST    | `/auth/login`          | all users           | Allows user to authenticate and log into account   |
 | GET    | `/auth`                 | all users           | Allows for user retrieval from a token             |
-| PUT    | `/auth/update`          | owner               | Allows user to update their account                |
-| DELETE | `/auth/delete`          | owner               | Allows user to delete their account                |
+| PUT    | `/users/update`         | owner               | Allows user to update their account                |
+| DELETE | `/users/delete`         | owner               | Allows user to delete their account                |
 
 ### Favorite Locations Routes
 

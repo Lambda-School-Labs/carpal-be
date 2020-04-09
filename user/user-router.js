@@ -30,7 +30,7 @@ router.put(
             let user;
 
             //if user profile has changed, update it, if not skip
-            if (!req.user === userBody) {
+            if (req.user !== userBody) {
                 user = await users.update(req.user.id, userBody);
             } else {
                 user = req.user;
