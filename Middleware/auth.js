@@ -1,8 +1,12 @@
 const jwt = require("jsonwebtoken");
 const { Users } = require("../Classes/Users");
 const { jwtSecret } = require("../config/secrets");
-
+const { UserDetails } = require("../Classes/UserDetails");
 const users = new Users();
+
+const audioLikes = new UserDetails("audio", "users_audio_likes");
+const audioDislikes = new UserDetails("audio", "users_audio_dislikes");
+const hobby = new UserDetails("hobbies", "users_hobbies");
 
 const verifyToken = () => {
     return (req, res, next) => {
@@ -28,8 +32,17 @@ const validateUserToken = () => {
         const id = req.decoded.subject;
         if (id) {
             const user = await users.findBy({ id });
+            const userHobbies = await hobby.findByUser(id);
+            const users_audio_dislikes = await audioDislikes.findByUser(id);
+            const users_audio_likes = await audioLikes.findByUser(id);
+
             if (user) {
-                req.user = user;
+                req.user = {
+                    ...user,
+                    hobbies: [...userHobbies],
+                    audioDislikes: [...users_audio_dislikes],
+                    audioLikes: [...users_audio_likes]
+                };
                 next();
             } else {
                 return res.status(404).json({ message: "User not found" });

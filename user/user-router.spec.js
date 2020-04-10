@@ -30,6 +30,16 @@ describe("Update user", () => {
         expect(res.body.audioLikes[1]).toHaveProperty("name", "Rap");
         expect(res.body.audioDislikes[2]).toHaveProperty("name", "Classical");
     });
+
+    test("Reject", async () => {
+        const res = await supertest(server)
+            .put("/users/update")
+            .send(user.body)
+            .set({ authorization: token });
+
+        expect(res.status).toBe(400);
+        expect(res.type).toBe("application/json");
+    });
 });
 
 describe("Delete user", () => {
