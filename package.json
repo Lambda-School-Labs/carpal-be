@@ -53,6 +53,7 @@
         "testEnvironment": "node",
         "collectCoverageFrom": [
             "**/*.{js,jsx}",
+            "!**/database/**",
             "!**/node_modules/**",
             "!**/vendor/**",
             "!**/__tests__/**"
