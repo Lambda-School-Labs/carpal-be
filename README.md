@@ -130,12 +130,14 @@ To get the server running locally:
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
-    *DATABASE_URL - URL for postgres database
-    *DB - Connection for local Postgres DB instance
-    *DB_TEST - Connection for local Postgres DB instance
-    *USER - Reflect what is setup in pgAdmin in your local environment
-    *PASSWORD - Reflect what is setup in pgAdmin in your local environment
-    *NODE_ENV - set to "development" until ready for "production"
+*  DATABASE_URL - URL for postgres database
+*  DB - Connection for local Postgres DB instance
+*  DB_TEST - Connection for local Postgres DB instance
+*  USER - Reflect what is setup in pgAdmin in your local environment
+*  PASSWORD - Reflect what is setup in pgAdmin in your local environment
+*  NODE_ENV - set to "development" until ready for "production"
+*  GOOGLE_CLIENT_ID - a client ID for Google OAuth2
+*  GOOGLE_CLIENT_SECRET - a client secret for Google OAuth2
 
 ## Contributing
 
