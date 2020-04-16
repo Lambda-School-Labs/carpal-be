@@ -28,7 +28,7 @@ exports.up = async function (knex) {
         tbl.string("status").defaultTo("pending");
     });
 
-    await knex.schema.createTable("riders", (tbl) => {
+    await knex.schema.createTable("saved_rides", (tbl) => {
         tbl.integer("ride_id")
             .notNullable()
             .references("id")
@@ -45,4 +45,7 @@ exports.up = async function (knex) {
     });
 };
 
-exports.down = function (knex) {};
+exports.down = async function (knex) {
+    await knex.schema.dropTableIfExists("saved_rides");
+    await knex.schema.dropTableIfExists("rides");
+};
