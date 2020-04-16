@@ -63,7 +63,7 @@ To get the server running locally:
 | Method | Endpoint                     | Access Control | Description                                  |
 | ------ | ---------------------------- | -------------- | -------------------------------------------- |
 | GET    | `/locations/favorites`       | owner          | Returns all favorite locations for a user    |
-| PUT    | `/locations/favorites/:name` | owner          | Update a user's certain favorite location    |
+| PUT    | `/locations/favorites/update/:name` | owner          | Update a user's certain favorite location    |
 | POST   | `/locations/favorites`       | owner          | Add a favorite location for a user           |
 | DELETE | `/locations/favorites/:id`   | owner          | Delete a a user's favorite location          |
 
