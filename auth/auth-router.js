@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const { jwtSecret } = require("../config/secrets");
-const { Users } = require("../Classes/Users");
+const { Users } = require("../Classes/users");
 const {
     verifyToken,
     validateUserToken,
@@ -48,7 +48,7 @@ router.post(
 
             const token = generateToken(userObj);
 
-            res.status(201).json({...userObj, token});
+            res.status(201).json({ ...userObj, token });
         } catch (err) {
             next(err);
         }
@@ -105,7 +105,7 @@ router.get(
     passport.authenticate("google", {
         failureRedirect: "https://www.letscarpal.com"
     }),
-    function(req, res) {
+    function (req, res) {
         res.redirect("https://www.letscarpal.com");
     }
 );
@@ -123,7 +123,7 @@ router.get(
     passport.authenticate("google", {
         failureRedirect: "https://staging.d3ic1rxl46vguk.amplifyapp.com/"
     }),
-    function(req, res) {
+    function (req, res) {
         res.redirect("https://staging.d3ic1rxl46vguk.amplifyapp.com/");
     }
 );
@@ -142,7 +142,7 @@ router.get(
     passport.authenticate("google", {
         failureRedirect: "http://localhost:3000/"
     }),
-    function(req, res) {
+    function (req, res) {
         const token = generateToken(req.user);
         res.cookie("auth", token);
         res.redirect("http://localhost:3000/");
