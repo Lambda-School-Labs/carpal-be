@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
-const { Users } = require("../Classes/Users");
+const { Users } = require("../Classes/users");
 const { jwtSecret } = require("../config/secrets");
-const { UserDetails } = require("../Classes/UserDetails");
+const { UserDetails } = require("../Classes/user-details");
 const users = new Users();
 
 const audioLikes = new UserDetails("audio", "users_audio_likes");
