@@ -11,6 +11,8 @@ router.post("/", async (req, res, next) => {
             start_location_id: req.body.start_location_id,
             end_location_id: req.body.end_location_id
         };
+    } catch (err) {
+        next(err);
     }
 });
 
