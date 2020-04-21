@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(cors());
 
-app.enable('trust proxy');
+app.enable("trust proxy");
 
 app.get("/", function (req, res) {
     res.json({
@@ -29,9 +29,9 @@ app.use("/locations", verifyToken(), validateUserToken(), locationRouter);
 app.use("/users", verifyToken(), validateUserToken(), usersRouter);
 
 app.use((err, req, res, next) => {
-    console.log(err)
-    res.status(500).json({ message: 'internal error' })
-})
+    console.log(err);
+    res.status(500).json({ message: "internal error" });
+});
 
 if (!module.parent) {
     app.listen(PORT, function () {

@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+
+const ridesRouter = require("../rides/rides-router");
+
 const { Users } = require("../Classes/users");
 const { UserDetails } = require("../Classes/user-details");
 const { checkArrays } = require("../Middleware/updateUser");
@@ -8,6 +11,8 @@ const users = new Users();
 const audioLikes = new UserDetails("audio", "users_audio_likes");
 const audioDislikes = new UserDetails("audio", "users_audio_dislikes");
 const hobby = new UserDetails("hobbies", "users_hobbies");
+
+router.use("/:id/rides", ridesRouter);
 
 router.put("/update", checkArrays(), async (req, res, next) => {
     try {
