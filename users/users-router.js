@@ -12,7 +12,7 @@ const audioLikes = new UserDetails("audio", "users_audio_likes");
 const audioDislikes = new UserDetails("audio", "users_audio_dislikes");
 const hobby = new UserDetails("hobbies", "users_hobbies");
 
-router.use("/:id/rides", ridesRouter);
+router.use("/rides", ridesRouter);
 
 router.put("/update", checkArrays(), async (req, res, next) => {
     try {
