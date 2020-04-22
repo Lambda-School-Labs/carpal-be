@@ -11,5 +11,3 @@ router.use("/", requestsDelete);
 router.use("/", requestsPost);
 
 module.exports = router;
-
-// should we just throw up another zoom?
