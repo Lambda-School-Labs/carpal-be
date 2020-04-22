@@ -2,6 +2,7 @@ const express = require("express");
 const authRouter = require("./auth/auth-router");
 const locationRouter = require("./location/location-router");
 const usersRouter = require("./users/users-router");
+const ridesRouter = require("./rides/rides-router");
 const requestsRouter = require("./requests/requests-router");
 const PORT = process.env.PORT || 3001;
 const HOST = process.env.HOST || "localhost";
@@ -28,7 +29,13 @@ app.get("/", function (req, res) {
 app.use("/auth", authRouter);
 app.use("/locations", verifyToken(), validateUserToken(), locationRouter);
 app.use("/users", verifyToken(), validateUserToken(), usersRouter);
-app.use("/requests", requestsRouter);
+app.use("/users/rides", verifyToken(), validateUserToken(), ridesRouter);
+app.use(
+    "/users/rides/:ride_id/requests",
+    verifyToken(),
+    validateUserToken(),
+    requestsRouter
+);
 
 app.use((err, req, res, next) => {
     console.log(err);
