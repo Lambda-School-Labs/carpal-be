@@ -1,8 +1,11 @@
 const jwt = require("jsonwebtoken");
 const { Users } = require("../Classes/users");
+const { Rides } = require("../Classes/rides");
+
 const { jwtSecret } = require("../config/secrets");
 const { UserDetails } = require("../Classes/user-details");
 const users = new Users();
+const rides = new Rides();
 
 const audioLikes = new UserDetails("audio", "users_audio_likes");
 const audioDislikes = new UserDetails("audio", "users_audio_dislikes");
@@ -98,10 +101,27 @@ function userExist() {
     };
 }
 
+function validateRideId() {
+    return async (req, res, next) => {
+        const ride = await rides.findBy({ id: req.params.id });
+        try {
+            if (ride) {
+                req.ride = { ...ride };
+                next();
+            } else {
+                res.status(404).json({ message: "Ride not found" });
+            }
+        } catch (error) {
+            next(error);
+        }
+    };
+}
+
 module.exports = {
     verifyToken,
     validateUserToken,
     validateLoginReqBody,
     userExist,
-    validateRegisterReqBody
+    validateRegisterReqBody,
+    validateRideId
 };
