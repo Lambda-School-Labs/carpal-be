@@ -1,7 +1,9 @@
 const express = require("express");
 const authRouter = require("./auth/auth-router");
 const locationRouter = require("./location/location-router");
-const usersRouter = require("./user/user-router");
+const usersRouter = require("./users/users-router");
+const ridesRouter = require("./rides/rides-router");
+const requestsRouter = require("./requests/requests-router");
 const PORT = process.env.PORT || 3001;
 const HOST = process.env.HOST || "localhost";
 const { verifyToken, validateUserToken } = require("./Middleware/auth");
@@ -16,7 +18,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(cors());
 
-app.enable('trust proxy');
+app.enable("trust proxy");
 
 app.get("/", function (req, res) {
     res.json({
@@ -27,11 +29,18 @@ app.get("/", function (req, res) {
 app.use("/auth", authRouter);
 app.use("/locations", verifyToken(), validateUserToken(), locationRouter);
 app.use("/users", verifyToken(), validateUserToken(), usersRouter);
+app.use("/users/rides", verifyToken(), validateUserToken(), ridesRouter);
+app.use(
+    "/users/rides/:ride_id/requests",
+    verifyToken(),
+    validateUserToken(),
+    requestsRouter
+);
 
 app.use((err, req, res, next) => {
-    console.log(err)
-    res.status(500).json({ message: 'internal error' })
-})
+    console.log(err);
+    res.status(500).json({ message: "internal error" });
+});
 
 if (!module.parent) {
     app.listen(PORT, function () {

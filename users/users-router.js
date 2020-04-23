@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const { Users } = require("../Classes/users");
 const { UserDetails } = require("../Classes/user-details");
 const { checkArrays } = require("../Middleware/updateUser");
