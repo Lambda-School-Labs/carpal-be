@@ -1,6 +1,6 @@
-const db = require("../database/db-config");
+const db = require("../../database/db-config");
 const supertest = require("supertest");
-const server = require("./../index.js");
+const server = require("../../index");
 
 let token;
 let user;

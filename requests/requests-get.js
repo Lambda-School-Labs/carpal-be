@@ -1,14 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { Rides } = require("../Classes/rides");
-const { Models } = require("../Classes/models")
+const { Requests } = require("../Classes/requests");
 
-
-const rides = new Rides();
+const requests = new Requests();
 
 router.get("/", async (req, res, next) => {
     try {
-        res.json(await rides.findAll());
+        res.json(await requests.findAll());
     } catch (err) {
         next(err);
     }
