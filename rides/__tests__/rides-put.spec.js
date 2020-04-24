@@ -17,8 +17,6 @@ describe("Rides-PUT-Router", () => {
         const res = await supertest(server)
             .put("/users/rides/1")
             .send({
-                driver_id: 1,
-                rider_id: 2,
                 start_location_id: 1,
                 end_location_id: 2,
                 status: "pending"

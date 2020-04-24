@@ -6,7 +6,11 @@ const ridesRouter = require("./rides/rides-router");
 const requestsRouter = require("./requests/requests-router");
 const PORT = process.env.PORT || 3001;
 const HOST = process.env.HOST || "localhost";
-const { verifyToken, validateUserToken } = require("./Middleware/auth");
+const {
+    verifyToken,
+    validateUserToken,
+    validateRideId
+} = require("./Middleware/auth");
 
 const app = express();
 
@@ -31,9 +35,10 @@ app.use("/locations", verifyToken(), validateUserToken(), locationRouter);
 app.use("/users", verifyToken(), validateUserToken(), usersRouter);
 app.use("/users/rides", verifyToken(), validateUserToken(), ridesRouter);
 app.use(
-    "/users/rides/:ride_id/requests",
+    "/rides/:id/requests",
     verifyToken(),
     validateUserToken(),
+    validateRideId(),
     requestsRouter
 );
 
