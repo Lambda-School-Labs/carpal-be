@@ -8,7 +8,7 @@ const rides = new Rides();
 router.delete("/:id", validateRideId(), async (req, res, next) => {
     try {
         const ride_id = req.params.id;
-        res.json(await rides.delete(ride_id));
+        res.status(200).json(await rides.delete(ride_id));
     } catch (err) {
         next(err);
     }
