@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { Rides } = require("../Classes/rides");
-
-const rides = new Rides();
+const { Requests } = require("../Classes/requests");
+const requests = new Requests();
 
 router.put("/", async (req, res, next) => {
     try {
