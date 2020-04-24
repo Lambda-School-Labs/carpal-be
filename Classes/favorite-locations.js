@@ -1,5 +1,5 @@
 const db = require("../database/db-config");
-const { Models } = require("./Models");
+const { Models } = require("./models");
 
 class FavoriteLocations extends Models {
     constructor(name) {
