@@ -7,17 +7,17 @@ exports.seed = function (knex) {
             return knex("rides_riders").insert([
                 {
                     ride_id: 1,
-                    user_id: 1,
+                    rider_id: 1,
                     status: "pending"
                 },
                 {
                     ride_id: 2,
-                    user_id: 2,
+                    rider_id: 2,
                     status: "confirmed"
                 },
                 {
                     ride_id: 2,
-                    user_id: 3,
+                    rider_id: 3,
                     status: "declined"
                 }
             ]);

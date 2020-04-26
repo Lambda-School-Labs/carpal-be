@@ -29,14 +29,14 @@ exports.up = async function (knex) {
             .inTable("rides")
             .onUpdate("CASCADE")
             .onDelete("CASCADE");
-        tbl.integer("user_id")
+        tbl.integer("rider_id")
             .notNullable()
             .references("id")
             .inTable("users")
             .onUpdate("CASCADE")
             .onDelete("CASCADE");
         tbl.string("status").defaultTo("pending");
-        tbl.primary(["user_id", "ride_id"]);
+        tbl.primary(["rider_id", "ride_id"]);
     });
 };
 
