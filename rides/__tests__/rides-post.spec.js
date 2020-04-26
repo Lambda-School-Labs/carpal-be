@@ -2,15 +2,10 @@ const supertest = require("supertest");
 const server = require("../../index");
 const db = require("../../database/db-config");
 
-let user;
-
-beforeAll(async () => {
+beforeEach(async () => {
     await db.seed.run();
-    //login a user to grab token
-    user = await supertest(server)
-        .post("/auth/login")
-        .send({ email: "dang@carpal.com", password: "abc123" });
 });
+const token = global.token
 
 describe("Rides Router", () => {
     test("Add new saved ride", async () => {
@@ -20,7 +15,7 @@ describe("Rides Router", () => {
                 start_location_id: 1,
                 end_location_id: 2
             })
-            .set({ authorization: user.body.token });
+            .set({ authorization: token });
 
         expect(res.status).toBe(201);
         expect(res.type).toEqual("application/json");
