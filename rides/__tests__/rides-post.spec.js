@@ -12,7 +12,7 @@ beforeAll(async () => {
         .send({ email: "dang@carpal.com", password: "abc123" });
 });
 
-describe("Rides Router", () => {
+describe("Rides Post Route", () => {
     test("Add new saved ride", async () => {
         const res = await supertest(server)
             .post("/users/rides")
