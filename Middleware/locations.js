@@ -1,4 +1,4 @@
-const { Models } = require("../Classes/Models");
+const { Models } = require("../Classes/models");
 
 const locations = new Models("locations");
 
@@ -32,10 +32,7 @@ const locationCheck = () => {
 const checkBody = () => {
     return async (req, res, next) => {
         try {
-            if (
-                !req.body.lat ||
-                !req.body.long
-            ) {
+            if (!req.body.lat || !req.body.long) {
                 return res
                     .status(400)
                     .json({ message: "Missing required fields" });
