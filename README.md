@@ -81,10 +81,11 @@ To get the server running locally:
 
 | Method | Endpoint                  | Access Control | Description                     |
 | ------ | ------------------------- | -------------- | ------------------------------- |
+| GET    | `/rides/:id/requests/all` | owner          | Returns all requests for a user |
 | GET    | `/rides/:id/requests/`    | owner          | Returns all requests for a user |
-| PUT    | `/rides/:id/requests/:id` | owner          | Update a user's certain request |
+| PUT    | `/rides/:id/requests/`    | owner          | Update a user's certain request |
 | POST   | `/rides/:id/requests/`    | owner          | Add a requst for a user         |
-| DELETE | `/rides/:id/requests/:id` | owner          | Delete a user's request         |
+| DELETE | `/rides/:id/requests`     | owner          | Delete a user's request         |
 
 # Data Model
 
