@@ -7,7 +7,7 @@ beforeEach(async () => {
 });
 const token = global.token
 
-describe("Rides Router", () => {
+describe("Rides Post Route", () => {
     test("Add new saved ride", async () => {
         const res = await supertest(server)
             .post("/users/rides")
