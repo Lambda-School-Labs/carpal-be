@@ -1,6 +1,6 @@
 const db = require("../database/db-config");
-const { UserDetails } = require("../Classes/UserDetails");
-const { Users } = require("../Classes/Users");
+const { UserDetails } = require("./user-details");
+const { Users } = require("./users");
 
 const userDB = new Users();
 const hobbiesDB = new UserDetails("hobbies", "users_hobbies");

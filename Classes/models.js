@@ -7,9 +7,7 @@ class Models {
     }
 
     findBy(filter) {
-        return db(this.name)
-            .where(filter)
-            .first();
+        return db(this.name).where(filter).first();
     }
 
     findAll() {
@@ -17,24 +15,17 @@ class Models {
     }
 
     async add(item) {
-        const [addedItem] = await db(this.name)
-            .insert(item)
-            .returning("*");
+        const [addedItem] = await db(this.name).insert(item).returning("*");
         return addedItem;
     }
 
     async update(id, item) {
-        await db(this.name)
-            .where({ id })
-            .update(item)
-            .returning("*");
+        await db(this.name).where({ id }).update(item).returning("*");
         return this.findBy({ id });
     }
 
     delete(id) {
-        return db(this.name)
-            .where({ id })
-            .del();
+        return db(this.name).where({ id }).del();
     }
 }
 

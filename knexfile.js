@@ -21,7 +21,7 @@ const localConnection = {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     database: process.env.DB,
-    user: process.env.USER,
+    user: process.env.USER || "postgres",
     password: process.env.PASSWORD
 };
 
@@ -30,7 +30,7 @@ module.exports = {
         ...pg,
 
         connection: {
-            ...localConnection,
+            ...localConnection
         }
     },
     staging: pg,
@@ -39,7 +39,7 @@ module.exports = {
         ...pg,
         connection: {
             ...localConnection,
-            database: process.env.DB_TEST,
+            database: process.env.DB_TEST || "postgres"
         }
     }
 };

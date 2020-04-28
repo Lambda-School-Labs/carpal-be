@@ -1,4 +1,3 @@
-
 [![Maintainability](https://api.codeclimate.com/v1/badges/a8ec7fda3d1cf5e2c7b1/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/carpal-be/maintainability)
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/a8ec7fda3d1cf5e2c7b1/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/carpal-be/test_coverage)
@@ -20,19 +19,20 @@ To get the server running locally:
 🚫 adjust these scripts to match your project
 
 -   Clone this repo and cd into carpal-be directory
--   **npm install** to install all required dependencies 
+-   **npm install** to install all required dependencies
 -   **npm run server** to start the local server
 -   **npm run test** to start server using testing environment
 
 ### Backend framework goes here
 
 ### Express.js
+
 🚫 Why did you choose this framework?
 
 -   Simplicity
 -   Minimal lines of code
 -   Flexible
--   Scalable 
+-   Scalable
 
 ## 2️⃣ Endpoints
 
@@ -40,32 +40,52 @@ To get the server running locally:
 
 #### Location Routes
 
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/locations`            | all users      | Returns all locations entered by all users   |
-| GET    | `/locations/:id`        | owner          | Returns a single location entered by user    |
-| POST   | `/locations`            | owner          | Allows user to enter in a new location       |
-| PUT    | `/locations/:id`        | owner          | Allows user to enter to update a location    |
-| DELETE | `/locations/:id`        | owner          | Delete a location                            |
+| Method | Endpoint         | Access Control | Description                                |
+| ------ | ---------------- | -------------- | ------------------------------------------ |
+| GET    | `/locations`     | all users      | Returns all locations entered by all users |
+| GET    | `/locations/:id` | owner          | Returns a single location entered by user  |
+| POST   | `/locations`     | owner          | Allows user to enter in a new location     |
+| PUT    | `/locations/:id` | owner          | Allows user to enter to update a location  |
+| DELETE | `/locations/:id` | owner          | Delete a location                          |
 
 #### User Routes
 
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| POST   | `/auth/register`        | all users           | Allows user to create an account                   |
-| POST   | `/auth/login`           | all users           | Allows user to authenticate and log into account   |
-| GET    | `/auth`                 | all users           | Allows for user retrieval from a token             |
-| PUT    | `/users/update`         | owner               | Allows user to update their account                |
-| DELETE | `/users/delete`         | owner               | Allows user to delete their account                |
+| Method | Endpoint         | Access Control | Description                                      |
+| ------ | ---------------- | -------------- | ------------------------------------------------ |
+| POST   | `/auth/register` | all users      | Allows user to create an account                 |
+| POST   | `/auth/login`    | all users      | Allows user to authenticate and log into account |
+| GET    | `/auth`          | all users      | Allows for user retrieval from a token           |
+| PUT    | `/users/update`  | owner          | Allows user to update their account              |
+| DELETE | `/users/delete`  | owner          | Allows user to delete their account              |
 
 ### Favorite Locations Routes
 
-| Method | Endpoint                     | Access Control | Description                                  |
-| ------ | ---------------------------- | -------------- | -------------------------------------------- |
-| GET    | `/locations/favorites`       | owner          | Returns all favorite locations for a user    |
-| PUT    | `/locations/favorites/:name` | owner          | Update a user's certain favorite location    |
-| POST   | `/locations/favorites`       | owner          | Add a favorite location for a user           |
-| DELETE | `/locations/favorites/:id`   | owner          | Delete a a user's favorite location          |
+| Method | Endpoint                            | Access Control           | Description                               |
+| ------ | ----------------------------------- | ------------------------ | ----------------------------------------- |
+| GET    | `/locations/favorites`              | owner                    | Returns all favorite locations for a user |
+| PUT    | `/locations/favorites/update/:name` | ownerrides/:id/requests/ | Update a user's certain favorite location |
+| POST   | `/locations/favorites`              | owner                    | Add a favorite location for a user        |
+| DELETE | `/locations/favorites/:id`          | owner                    | Delete a user's favorite location         |
+
+### Rides Routes
+
+| Method | Endpoint          | Access Control | Description                       |
+| ------ | ----------------- | -------------- | --------------------------------- |
+| GET    | `/user/rides`     | owner          | Returns all rides for a user      |
+| GET    | `/user/rides/:id` | owner          | Returns aspecific ride for a user |
+| PUT    | `/user/rides/:id` | owner          | Update a user's ride              |
+| POST   | `/user/rides/`    | owner          | Add a ride for a user             |
+| DELETE | `/user/rides/:id` | owner          | Delete a user's ride              |
+
+### Request Routes
+
+| Method | Endpoint                  | Access Control | Description                     |
+| ------ | ------------------------- | -------------- | ------------------------------- |
+| GET    | `/rides/:id/requests/all` | owner          | Returns all requests for a user |
+| GET    | `/rides/:id/requests/`    | owner          | Returns all requests for a user |
+| PUT    | `/rides/:id/requests/`    | owner          | Update a user's certain request |
+| POST   | `/rides/:id/requests/`    | owner          | Add a requst for a user         |
+| DELETE | `/rides/:id/requests`     | owner          | Delete a user's request         |
 
 # Data Model
 
@@ -104,6 +124,36 @@ To get the server running locally:
 }
 ```
 
+#### Rides
+
+---
+
+```
+{
+    "id": 1,
+    "driver_id": 1,
+    "rider_id": 2,
+    "start_location_id": 1,
+    "end_location_id": 2,
+    "status": "pending"
+  }
+```
+
+#### Request
+
+---
+
+```
+{
+    "id": 1,
+    "driver_id": 1,
+    "rider_id": 2,
+    "start_location_id": 1,
+    "end_location_id": 2,
+    "status": "pending"
+  }
+```
+
 ## 2️⃣ Actions
 
 🚫 This is an example, replace this with the actions that pertain to your backend
@@ -124,18 +174,20 @@ To get the server running locally:
 
 `validateUserToken()` -> Returns user information from token
 
-
 ## 3️⃣ Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
-    *DATABASE_URL - URL for postgres database
-    *DB - Connection for local Postgres DB instance
-    *DB_TEST - Connection for local Postgres DB instance
-    *USER - Reflect what is setup in pgAdmin in your local environment
-    *PASSWORD - Reflect what is setup in pgAdmin in your local environment
-    *NODE_ENV - set to "development" until ready for "production"
+
+-   DATABASE_URL - URL for postgres database
+-   DB - Connection for local Postgres DB instance
+-   DB_TEST - Connection for local Postgres DB instance
+-   USER - Reflect what is setup in pgAdmin in your local environment
+-   PASSWORD - Reflect what is setup in pgAdmin in your local environment
+-   NODE_ENV - set to "development" until ready for "production"
+-   GOOGLE_CLIENT_ID - a client ID for Google OAuth2
+-   GOOGLE_CLIENT_SECRET - a client secret for Google OAuth2
 
 ## Contributing
 

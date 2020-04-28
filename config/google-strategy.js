@@ -1,5 +1,5 @@
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
-const { Users } = require("../Classes/Users");
+const { Users } = require("../Classes/users");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
@@ -16,7 +16,7 @@ module.exports = new GoogleStrategy(
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: `/auth/google/callback/${process.env.GOOGLE_ENV}`
     },
-    async function(accessToken, refreshToken, profile, done) {
+    async function (accessToken, refreshToken, profile, done) {
         const user = {
             first_name: profile.name.givenName,
             last_name: profile.name.familyName,

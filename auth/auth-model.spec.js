@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const db = require("../database/db-config");
-const { Users } = require("../Classes/Users");
+const { Users } = require("../Classes/users");
 const User = new Users();
 
 beforeEach(async () => {

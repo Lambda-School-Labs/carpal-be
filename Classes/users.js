@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const db = require("../database/db-config");
-const { Models } = require("./Models");
+const { Models } = require("./models");
 
 class Users extends Models {
     constructor(name) {
@@ -31,9 +31,7 @@ class Users extends Models {
     //Override add method in Models to return everything but password and hash password before inserting
     async add(item) {
         item.password = bcrypt.hashSync(item.password, 12);
-        const [newUser] = await db(this.name)
-            .insert(item)
-            .returning("id");
+        const [newUser] = await db(this.name).insert(item).returning("id");
         return this.findById(newUser);
     }
     //Override the findAll method in Models to avoid returning all users' passwords back
