@@ -6,8 +6,8 @@ const requests = new Requests();
 
 router.delete("/:id", async (req, res, next) => {
     try {
-        const req_id = req.params.req_id;
-        res.status(200).json(await requests.delete(req_id));
+        // const req_id = req.params.id;
+        res.status(200).json(await requests.delete(req.params.id));
     } catch (err) {
         next(err);
     }
