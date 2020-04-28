@@ -14,7 +14,7 @@ beforeAll(async () => {
 describe("Request Get Route", () => {
     test("Get all ride requests", async () => {
         const res = await supertest(server)
-            .get("/rides/1/requests")
+            .get("/rides/1/requests/all")
             .set({ authorization: user.body.token });
 
         expect(res.status).toBe(200);

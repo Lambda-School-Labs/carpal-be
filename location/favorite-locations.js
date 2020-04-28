@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { verifyToken, validateUserToken } = require("../Middleware/auth");
-const { FavoriteLocations } = require("../Classes/FavoriteLocations");
+const { FavoriteLocations } = require("../Classes/favorite-locations");
 const { checkBody, locationCheck } = require("../Middleware/locations");
 const { Models } = require("../Classes/models");
 
