@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const passport = require("passport");
-const { jwtSecret } = require("../config/secrets");
 const { Users } = require("../Classes/users");
 const {
     verifyToken,
@@ -13,7 +11,7 @@ const {
     validateRegisterReqBody
 } = require("../Middleware/auth");
 const googleStrat = require("../config/google-strategy");
-
+const generateToken = require('../utils/generateToken')
 const users = new Users();
 
 passport.use(googleStrat);
@@ -148,16 +146,5 @@ router.get(
         res.redirect("http://localhost:3000/");
     }
 );
-
-function generateToken(user) {
-    const payload = {
-        subject: user.id,
-        email: user.email
-    };
-    const options = {
-        expiresIn: "1d"
-    };
-    return jwt.sign(payload, jwtSecret, options);
-}
 
 module.exports = router;
