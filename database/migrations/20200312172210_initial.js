@@ -9,7 +9,7 @@ exports.up = async function (knex) {
 
         tbl.string("password").notNullable();
         tbl.boolean("is_driver").defaultTo(false);
-        //default pone_number
+        //default phone_number
         tbl.bigInteger("phone_number").notNullable().defaultTo(555555555);
         tbl.timestamp("created_at").defaultTo(knex.fn.now());
         //default zip
