@@ -100,6 +100,22 @@ function userExist() {
         }
     };
 }
+// create user rider_id validation
+function validateRiderId() {
+    return async (req, res, next) => {
+        const user = await users.findBy({ id: req.params.rider_id });
+        try {
+            if (user) {
+                req.rider = user;
+                next();
+            } else {
+                res.status(404).json({ message: "Rider not found" });
+            }
+        } catch (error) {
+            next(error);
+        }
+    };
+}
 
 function validateRideId() {
     return async (req, res, next) => {
@@ -123,5 +139,6 @@ module.exports = {
     validateLoginReqBody,
     userExist,
     validateRegisterReqBody,
+    validateRiderId,
     validateRideId
 };

@@ -1,38 +1,43 @@
-exports.seed = function(knex) {
+exports.seed = function (knex) {
     // Deletes ALL existing entries
     return knex("locations")
         .del()
-        .then(function() {
+        .then(function () {
             // Inserts seed entries
             return knex("locations").insert([
-                // {
-                //     name: "home",
-                //     address: "4239 longfoot way",
-                //     zip_code: 95135,
-                //     city: "san jose",
-                //     state: "ca"
-                // },
-                // {
-                //     name: "work",
-                //     address: "50 fremont street",
-                //     zip_code: 94150,
-                //     city: "san francisco",
-                //     state: "ca"
-                // },
-                // {
-                //     name: "gym",
-                //     address: "224 Frazee rd",
-                //     zip_code: 92058,
-                //     city: "oceanside",
-                //     state: "ca"
-                // }
+                // San Francisco locations (1-6)
                 {
-                    lat:39.385348651562, 
-                    long: -99.797763874469
+                    lat: 37.757532,
+                    long: -122.388505
                 },
                 {
-                    lat:34.386328485303,
-                    long:-117.545965011690
+                    lat: 37.797132,
+                    long: -122.413711
+                },
+                {
+                    lat: 37.806426,
+                    long: -122.4318
+                },
+                {
+                    lat: 37.797259,
+                    long: -122.406067
+                },
+                {
+                    lat: 37.770069,
+                    long: -122.446911
+                },
+                {
+                    lat: 37.754665,
+                    long: -122.446676
+                },
+                // other locations (7-8)
+                {
+                    lat: 39.779447,
+                    long: -105.186582
+                },
+                {
+                    lat: 39.778351,
+                    long: -105.054163
                 }
             ]);
         });
