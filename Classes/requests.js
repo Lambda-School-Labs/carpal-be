@@ -19,9 +19,22 @@ class Requests extends Models {
     async update(ride_id, rider_id, status) {
         await db(this.name)
             .where({ ride_id, rider_id })
-            .update({status: status})
+            .update({ status: status })
             .returning("*");
         return this.getSpecificRequest(ride_id, rider_id);
+    }
+
+    async getByDriver(driver_id) {
+        console.log(driver_id)
+        return db(`${this.name} as req`)
+            .join("rides as r", "r.id", "req.ride_id")
+            .join("users as u", "u.id", "req.rider_id")
+            .where({ "r.driver_id": driver_id })
+            .select(
+                "req.rider_id",
+                "u.first_name as rider_name",
+                "req.status"
+            );
     }
 }
 

@@ -14,7 +14,7 @@ router.get("/all", async (req, res, next) => {
 
 router.get("/", async (req, res, next) => {
     try {
-        res.json(await requests.getSpecificRequest(req.ride.id, req.user.id));
+        res.json(await requests.getByDriver(req.user.id));
     } catch (err) {
         next(err);
     }
