@@ -11,7 +11,8 @@ router.get("/", async (req, res, next) => {
         if (start_location && end_location) {
             const filteredRides = allRides.filter((ride) => {
                 const isClose = (coor1, coor2) => {
-                   return Math.abs(coor1 - coor2) < 0.6                     
+                    // .15 is equal to a 10 mile radius around a coordinate
+                   return Math.abs(coor1 - coor2) < 0.15
                 }
                 const startLatDif = isClose(ride.start_location.lat, start_location.lat)
                 const startLongDif = isClose(ride.start_location.long, start_location.long)

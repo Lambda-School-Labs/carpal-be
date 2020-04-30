@@ -16,10 +16,10 @@ class Requests extends Models {
         return db(this.name).where({ ride_id, rider_id }).del();
     }
 
-    async update(ride_id, rider_id, items) {
+    async update(ride_id, rider_id, status) {
         await db(this.name)
             .where({ ride_id, rider_id })
-            .update(items)
+            .update({status: status})
             .returning("*");
         return this.getSpecificRequest(ride_id, rider_id);
     }

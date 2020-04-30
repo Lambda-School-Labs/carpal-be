@@ -119,7 +119,7 @@ function validateRiderId() {
 
 function validateRideId() {
     return async (req, res, next) => {
-        const ride = await rides.findBy({ id: req.params.id });
+        const ride = await rides.findBy({ id: req.body.ride_id });
         try {
             if (ride) {
                 req.ride = { ...ride };

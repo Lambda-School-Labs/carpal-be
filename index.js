@@ -35,9 +35,9 @@ app.use("/auth", authRouter);
 app.use("/locations", verifyToken(), validateUserToken(), locationRouter);
 app.use("/users", verifyToken(), validateUserToken(), usersRouter);
 app.use("/users/rides", verifyToken(), validateUserToken(), usersRidesRouter);
-app.use("/rides", ridesRouter);
+app.use("/rides", verifyToken(), validateUserToken(), ridesRouter);
 app.use(
-    "/rides/:id/requests",
+    "/rides/requests",
     verifyToken(),
     validateUserToken(),
     validateRideId(),
