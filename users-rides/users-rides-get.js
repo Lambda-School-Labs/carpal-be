@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { Rides } = require("../Classes/rides");
+const { Requests } = require("../Classes/requests");
 
 const rides = new Rides();
+const requests = new Requests();
 
 router.get("/", async (req, res, next) => {
     try {
@@ -11,18 +13,25 @@ router.get("/", async (req, res, next) => {
         next(err);
     }
 });
+// need to await the requests and nest the object into the ride. 
 router.get("/:id", async (req, res, next) => {
     try {
         const ride = await rides.findBy({
             id: req.params.id,
             driver_id: req.user.id
         });
+        console.log(ride);
+        const requestsDetails = await requests.findBy({
+            ride_id: req.params.id
+        })
+        console.log(requestsDetails);
+        const rideDetails = {...ride, requestsDetails}
         if (!ride || ride.length < 1) {
             res.status(404).json({
                 message: "ride id not found for current user"
             });
         }
-        res.json(ride);
+        res.json(rideDetails);
     } catch (err) {
         next(err);
     }
