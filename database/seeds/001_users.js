@@ -1,10 +1,10 @@
 const bcrypt = require("bcryptjs");
 
-exports.seed = function(knex) {
+exports.seed = function (knex) {
     // Deletes ALL existing entries
     return knex("users")
         .del()
-        .then(function() {
+        .then(function () {
             // Inserts seed entries
             return knex("users").insert([
                 {
@@ -12,7 +12,7 @@ exports.seed = function(knex) {
                     last_name: "lu",
                     email: "dang@carpal.com",
                     password: bcrypt.hashSync("abc123", 10),
-                    is_driver: false,
+                    is_driver: true,
                     phone_number: 7602242913,
                     zip_code: 92008,
                     is_admin: false,
@@ -26,7 +26,7 @@ exports.seed = function(knex) {
                     last_name: "martin",
                     email: "daniel@carpal.com",
                     password: bcrypt.hashSync("xyz789", 10),
-                    is_driver: false,
+                    is_driver: true,
                     phone_number: 4153339932,
                     zip_code: 94150,
                     is_admin: false,
@@ -40,7 +40,7 @@ exports.seed = function(knex) {
                     last_name: "banadzem",
                     email: "lesley@carpal.com",
                     password: bcrypt.hashSync("mnop456", 10),
-                    is_driver: false,
+                    is_driver: true,
                     phone_number: 3104453333,
                     zip_code: 92123,
                     is_admin: false,
