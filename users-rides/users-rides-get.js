@@ -14,6 +14,8 @@ router.get("/", async (req, res, next) => {
     }
 });
 // need to await the requests and nest the object into the ride. 
+// add findAllById to the requests model. all requests on a given ride. 
+// making a quick not because i forgot to add you guys to the commit. sorry :)
 router.get("/:id", async (req, res, next) => {
     try {
         const ride = await rides.findBy({
