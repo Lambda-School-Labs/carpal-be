@@ -4,15 +4,15 @@ const { Requests } = require("../Classes/requests");
 
 const requests = new Requests();
 
-router.get("/all", async (req, res, next) => {
+router.get("/rider", async (req, res, next) => {
     try {
-        res.json(await requests.findAll().where({ ride_id: req.user.id }));
+        res.json(await requests.findAll().where({ rider_id: req.user.id }));
     } catch (err) {
         next(err);
     }
 });
 
-router.get("/", async (req, res, next) => {
+router.get("/driver", async (req, res, next) => {
     try {
         res.json(await requests.getByDriver(req.user.id));
     } catch (err) {
