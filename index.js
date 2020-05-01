@@ -40,7 +40,7 @@ app.use(
     "/rides/requests",
     verifyToken(),
     validateUserToken(),
-    validateRideId(),
+    validateRideId(), // this breaks get request endpoints because we don't pass it a ride_id
     requestsRouter
 );
 

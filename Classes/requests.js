@@ -23,6 +23,16 @@ class Requests extends Models {
             .returning("*");
         return this.getSpecificRequest(ride_id, rider_id);
     }
+
+    async getByDriver(driver_id) {
+        return db(`${this.name} as req`)
+            .join("rides as r", "r.id", "req.ride_id")
+            .join("users as u", "u.id", "req.rider_id")
+            .where({ "r.driver_id": driver_id })
+            .whereNot({ "req.status": "declined" })
+            .select("req.rider_id", "u.first_name as rider_name", "req.status");
+    }
+
     async findAllBy(filter) {
         return db(this.name).where(filter)
     }
