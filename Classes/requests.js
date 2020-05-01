@@ -32,6 +32,10 @@ class Requests extends Models {
             .whereNot({ "req.status": "declined" })
             .select("req.rider_id", "u.first_name as rider_name", "req.status");
     }
+
+    async findAllBy(filter) {
+        return db(this.name).where(filter)
+    }
 }
 
 module.exports = { Requests };
