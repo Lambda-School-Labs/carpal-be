@@ -6,7 +6,7 @@ const pg = {
     connection: process.env.DATABASE_URL,
     pool: {
         min: 2,
-        max: 100
+        max: 10
     },
     migrations: {
         directory: "./database/migrations"
@@ -16,7 +16,7 @@ const pg = {
     }
 };
 
-//Connection Object
+//Connection Object // comment to make up for forgetting you guys. sorry :(
 const localConnection = {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
