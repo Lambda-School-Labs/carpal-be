@@ -2,6 +2,7 @@ const db = require("../../database/db-config");
 const supertest = require("supertest");
 const server = require("../../index");
 
+
 const ride_id = 2
 beforeEach(async () => {
     await db.seed.run();
@@ -14,7 +15,6 @@ describe("Delete ride", () => {
             .delete(`/users/rides/${ride_id}`)
             .set({ authorization: token });
 
-        expect(res.status).toBe(200);
-        expect(res.body).toEqual(1);
+        expect(res.status).toBe(204);
     });
 });

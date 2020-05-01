@@ -20,8 +20,8 @@ describe("Location Route", () => {
         expect(res.status).toBe(200);
         expect(res.type).toEqual("application/json");
         expect(res.body).toMatchObject({
-            lat:39.385348651562, 
-            long: -99.797763874469
+            lat: 37.757532, 
+            long: -122.388505
         });
     });
 
