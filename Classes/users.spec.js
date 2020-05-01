@@ -12,7 +12,10 @@ let user;
 beforeEach(async () => {
     await db.seed.run();
     user = await userDB.findBy({ email: "dang@carpal.com" });
+    console.log(user)
 });
+
+const token = global.token;
 
 describe("UserDetails class functions", () => {
     test("Add Hobbies", async () => {

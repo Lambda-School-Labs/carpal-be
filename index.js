@@ -10,7 +10,6 @@ const HOST = process.env.HOST || "localhost";
 const {
     verifyToken,
     validateUserToken,
-    validateRideId
 } = require("./Middleware/auth");
 
 const app = express();
@@ -40,7 +39,6 @@ app.use(
     "/rides/requests",
     verifyToken(),
     validateUserToken(),
-    validateRideId(), // this breaks get request endpoints because we don't pass it a ride_id
     requestsRouter
 );
 

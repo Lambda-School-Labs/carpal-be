@@ -6,7 +6,7 @@ const requests = new Requests();
 
 router.delete("/", async (req, res, next) => {
     try {
-const deleteRes = await requests.delete(req.body.ride_id, req.user.id)
+        const deleteRes = await requests.delete(req.body.ride_id, req.user.id)
         res.status(204).json(deleteRes);
     } catch (err) {
         next(err);

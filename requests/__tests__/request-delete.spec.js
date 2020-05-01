@@ -14,7 +14,8 @@ beforeAll(async () => {
 describe("Delete ride", () => {
     test("delete a request by id", async () => {
         const res = await supertest(server)
-            .delete("/rides/1/requests")
+            .delete("/rides/requests")
+            .send({ ride_id: 1 })
             .set({ authorization: user.body.token });
 
         expect(res.status).toBe(204);

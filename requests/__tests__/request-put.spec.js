@@ -14,8 +14,10 @@ beforeAll(async () => {
 describe("Update ride", () => {
     test("update a request by id", async () => {
         const res = await supertest(server)
-            .put("/rides/1/requests")
+            .put("/rides/requests")
             .send({
+                ride_id: 1,
+                rider_id: 1,
                 status: "accepted"
             })
             .set({ authorization: user.body.token });

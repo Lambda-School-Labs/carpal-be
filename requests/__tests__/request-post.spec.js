@@ -11,8 +11,9 @@ const token = global.token
 describe("Requests Post Route", () => {
     test("Add new ride request", async () => {
         const res = await supertest(server)
-            .post("/rides/1/requests")
+            .post("/rides/requests")
             .send({
+                ride_id: 1,
                 status: "pending"
             })
             .set({ authorization: token });
