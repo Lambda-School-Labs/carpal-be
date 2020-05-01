@@ -19,9 +19,12 @@ class Requests extends Models {
     async update(ride_id, rider_id, status) {
         await db(this.name)
             .where({ ride_id, rider_id })
-            .update({status: status})
+            .update({ status: status })
             .returning("*");
         return this.getSpecificRequest(ride_id, rider_id);
+    }
+    async findAllBy(filter) {
+        return db(this.name).where(filter)
     }
 }
 

@@ -15,6 +15,6 @@ describe("Delete ride", () => {
             .delete(`/users/rides/${ride_id}`)
             .set({ authorization: token });
 
-        expect(res.status).toBe(204);        
+        expect(res.status).toBe(204);
     });
 });

@@ -11,10 +11,10 @@ describe("Ride Get Route", () => {
     test("Get all rides", async () => {
         const res = await supertest(server)
             .get("/users/rides")
-            .set({ authorization: token})
+            .set({ authorization: token })
 
         expect(res.status).toBe(200);
-        expect(res.type).toEqual("application/json")        
+        expect(res.type).toEqual("application/json")
     })
     test("Ride by id", async () => {
         const res = await supertest(server)
