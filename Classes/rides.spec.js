@@ -25,10 +25,9 @@ describe("Rides class functions", () => {
   });
 
   test("Delete Ride", async () => {
-    const newRide = await ridesDB.delete(1);
+    const deletedRide = await ridesDB.delete(1);
 
-    expect(newRide).toHaveProperty("start_location_id", 1);
-    expect(newRide).toHaveProperty("driver_id", 1);
+    expect(deletedRide).toBe( 1);
   });
 
   test("Modify Ride", async () => {
