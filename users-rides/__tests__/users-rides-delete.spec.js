@@ -5,9 +5,6 @@ const server = require("../../index");
 beforeEach(async () => {
     await db.seed.run();
 });
-afterEach(async () => {
-    await db.destroy()
-})
 
 describe("Delete ride", () => {
     test("Delete a ride by id", async () => {

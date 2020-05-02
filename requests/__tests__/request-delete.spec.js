@@ -7,9 +7,7 @@ let user;
 beforeAll(async () => {
     await db.seed.run();
 });
-afterEach(async () => {
-    await db.destroy()
-})
+
 describe("Delete ride", () => {
     test("delete a request by id", async () => {
         const res = await supertest(server)

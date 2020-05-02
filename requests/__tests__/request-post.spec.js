@@ -6,9 +6,7 @@ const db = require("../../database/db-config");
 beforeAll(async () => {
     await db.seed.run();
 });
-afterEach(async () => {
-    await db.destroy()
-})
+
 describe("Requests Post Route", () => {
     test("Add new ride request", async () => {
         const res = await supertest(server)

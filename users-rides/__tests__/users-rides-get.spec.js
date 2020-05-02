@@ -5,9 +5,7 @@ const db = require("../../database/db-config")
 beforeEach(async () => {
     await db.seed.run();
 });
-afterAll(async () => {
-    await db.destroy()
-})
+
 describe("Ride Get Route", () => {
     test("Get all rides", async () => {
         const res = await supertest(server)

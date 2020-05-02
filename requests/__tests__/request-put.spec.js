@@ -8,9 +8,7 @@ beforeAll(async () => {
     await db.seed.run();
 
 });
-afterEach(async () => {
-    await db.destroy()
-})
+
 describe("Update ride", () => {
     test("update a request by id", async () => {
         const res = await supertest(server)

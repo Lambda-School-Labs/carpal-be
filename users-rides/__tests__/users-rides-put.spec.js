@@ -5,9 +5,6 @@ const db = require("../../database/db-config");
 beforeEach(async () => {
     await db.seed.run();
 });
-afterAll(async () => {
-    await db.destroy()
-})
 
 describe("Rides-PUT-Router", () => {
     it("returns 200 OK", async () => {
