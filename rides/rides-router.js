@@ -25,7 +25,7 @@ router.get("/", async (req, res, next) => {
                     return ride
                 }
             })
-            res.json(filteredRides)
+            return res.json(filteredRides)
         }
         res.json(allRides);
     } catch (err) {
