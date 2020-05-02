@@ -5,8 +5,9 @@ const db = require("../../database/db-config");
 beforeEach(async () => {
     await db.seed.run();
 });
-const token = global.token
-
+afterEach(async () => {
+    await db.destroy()
+})
 describe("Rides Post Route", () => {
     test("Add new saved ride", async () => {
         const res = await supertest(server)
@@ -15,7 +16,7 @@ describe("Rides Post Route", () => {
                 start_location_id: 1,
                 end_location_id: 2
             })
-            .set({ authorization: token });
+            .set({ authorization: global.token });
 
         expect(res.status).toBe(201);
         expect(res.type).toEqual("application/json");

@@ -5,14 +5,15 @@ const server = require("../../index");
 beforeEach(async () => {
     await db.seed.run();
 });
-
-const token = global.token
+afterEach(async () => {
+    await db.destroy()
+})
 
 describe("Delete ride", () => {
     test("Delete a ride by id", async () => {
         const res = await supertest(server)
             .delete("/users/rides")
-            .set({ authorization: token })
+            .set({ authorization: global.token })
             .send({
                 "ride_id": 2
             })

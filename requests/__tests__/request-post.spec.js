@@ -6,8 +6,9 @@ const db = require("../../database/db-config");
 beforeAll(async () => {
     await db.seed.run();
 });
-const token = global.token
-
+afterEach(async () => {
+    await db.destroy()
+})
 describe("Requests Post Route", () => {
     test("Add new ride request", async () => {
         const res = await supertest(server)
@@ -16,7 +17,7 @@ describe("Requests Post Route", () => {
                 ride_id: 1,
                 status: "pending"
             })
-            .set({ authorization: token });
+            .set({ authorization: global.token });
 
         expect(res.status).toBe(201);
         expect(res.type).toEqual("application/json");

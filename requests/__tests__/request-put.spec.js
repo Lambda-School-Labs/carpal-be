@@ -6,11 +6,11 @@ let user;
 
 beforeAll(async () => {
     await db.seed.run();
-    user = await supertest(server)
-        .post("/auth/login")
-        .send({ email: "dang@carpal.com", password: "abc123" });
-});
 
+});
+afterEach(async () => {
+    await db.destroy()
+})
 describe("Update ride", () => {
     test("update a request by id", async () => {
         const res = await supertest(server)
@@ -20,7 +20,7 @@ describe("Update ride", () => {
                 rider_id: 1,
                 status: "accepted"
             })
-            .set({ authorization: user.body.token });
+            .set({ authorization: global.token });
 
         expect(res.status).toBe(200);
         expect(res.type).toEqual("application/json");

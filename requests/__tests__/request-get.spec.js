@@ -6,11 +6,11 @@ let user;
 
 beforeAll(async () => {
     await db.seed.run();
-    user = await supertest(server)
-        .post("/auth/login")
-        .send({ email: "dang@carpal.com", password: "abc123" });
-});
 
+});
+afterEach(async () => {
+    await db.destroy()
+})
 // describe("Request Get Route", () => {
 //     test("Get all ride requests", async () => {
 //         const res = await supertest(server)
@@ -29,12 +29,11 @@ async function fetchRequest(route){
 
   let res = await supertest(server)
     .get(route)
-    .set({ authorization: user.body.token });
+    .set({ authorization: global.token });
 
     return res
 }
 test("Get all ride requests for Riders", async () => {
-    expect(typeof user.body.token).toBe("string");
 
     const res = await fetchRequest("/rides/requests/rider")
 
@@ -45,7 +44,6 @@ test("Get all ride requests for Riders", async () => {
 });
 
 test("Get all ride requests for Drivers", async () => {
-    expect(typeof user.body.token).toBe("string");
 
     const res = await fetchRequest("/rides/requests/driver")
 
