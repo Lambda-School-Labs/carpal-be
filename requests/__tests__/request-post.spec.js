@@ -14,14 +14,14 @@ describe("Requests Post Route", () => {
         const res = await supertest(server)
             .post("/rides/requests")
             .send({
-                ride_id: 1,
+                ride_id: 5,
                 status: "pending"
             })
             .set({ authorization: global.token });
 
         expect(res.status).toBe(201);
         expect(res.type).toEqual("application/json");
-        expect(res.body).toHaveProperty("ride_id", 2);
+        expect(res.body).toHaveProperty("ride_id", 5);
         expect(res.body).toHaveProperty("rider_id", 1);
         expect(res.body).toHaveProperty("status", "pending");
     });
