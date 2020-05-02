@@ -6,8 +6,8 @@ const requestsDelete = require("./requests-delete");
 const requestsPost = require("./requests-post");
 const { validateRideId } = require("../Middleware/auth");
 
-router.use("/", validateRideId(), requestsPut);
 router.use("/", requestsGet);
+router.use("/", validateRideId(), requestsPut);
 router.use("/", validateRideId(), requestsDelete);
 router.use("/", validateRideId(), requestsPost);
 
