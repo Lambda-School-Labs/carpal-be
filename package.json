@@ -60,6 +60,7 @@
         ],
         "setupFilesAfterEnv": [
             "<rootDir>/utils/jest.setup.js"
-        ]
+        ],
+        "globalTeardown": "<rootDir>/utils/jest.teardown.js"
     }
 }
