@@ -36,7 +36,7 @@ exports.up = async function (knex) {
             .onUpdate("CASCADE")
             .onDelete("CASCADE");
         tbl.string("status").defaultTo("pending");
-        tbl.primary(["rider_id", "ride_id"]);
+        tbl.increments();
     });
 };
 
