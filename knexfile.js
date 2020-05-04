@@ -16,7 +16,7 @@ const pg = {
     }
 };
 
-//Connection Object
+//Connection Object // comment to make up for forgetting you guys. sorry :(
 const localConnection = {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
