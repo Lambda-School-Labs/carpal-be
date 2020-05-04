@@ -10,7 +10,7 @@ router.put("/", async (req, res, next) => {
             client.messages.create({
                 body: `Your ride has been confirmed`, // add ETA and driver details/name
                 from: process.env.TWILIO_FROM_PHONE,
-                to: req.user.phone_number
+                to: `+1${req.user.phone_number}`
             });
         }
         res.status(200).json(
