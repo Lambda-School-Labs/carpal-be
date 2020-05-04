@@ -5,12 +5,8 @@ const requests = new Requests();
 
 router.put("/", async (req, res, next) => {
     try {
-        const requestBody = {
-            status: req.body.status
-        };
-
         res.status(200).json(
-            await requests.update(req.ride.id, req.user.id, requestBody)
+            await requests.update(req.body.ride_id, req.body.rider_id, req.body.status)
         );
     } catch (err) {
         next(err);

@@ -20,7 +20,7 @@ describe("Favorite locations", () => {
 
         expect(res.status).toBe(200);
         expect(res.type).toEqual("application/json");
-        expect(res.body[0]).toHaveProperty("lat", 39.385348651562);
+        expect(res.body[0]).toHaveProperty("lat", 37.757532);
         expect(res.body[0]).toHaveProperty("name", "Gym");
     });
 

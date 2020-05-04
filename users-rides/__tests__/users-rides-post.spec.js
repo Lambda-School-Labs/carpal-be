@@ -6,20 +6,19 @@ beforeEach(async () => {
     await db.seed.run();
 });
 
-const token = global.token
-
-describe("Rides-PUT-Router", () => {
-    it("returns 200 OK", async () => {
+describe("Rides Post Route", () => {
+    test("Add new saved ride", async () => {
         const res = await supertest(server)
-            .put("/users/rides/1")
+            .post("/users/rides")
             .send({
                 start_location_id: 1,
-                end_location_id: 2,
-                status: "pending"
+                end_location_id: 2
             })
-            .set({ authorization: token });
+            .set({ authorization: global.token });
 
-        expect(res.status).toBe(200);
+        expect(res.status).toBe(201);
         expect(res.type).toEqual("application/json");
+        expect(res.body).toHaveProperty("driver_id", 1);
+        expect(res.body.id).toBeGreaterThan(0);
     });
 });

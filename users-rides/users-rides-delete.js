@@ -5,12 +5,10 @@ const { validateRideId } = require("../Middleware/auth");
 
 const rides = new Rides();
 
-router.put("/:id", validateRideId(), async (req, res, next) => {
-    const { id } = req.params;
-    const changes = req.body;
+router.delete("/", validateRideId(), async (req, res, next) => {
     try {
-        const updatedRide = await rides.update(id, changes);
-        res.status(200).json(updatedRide);
+        const ride_id = req.body.ride_id;
+        res.status(204).json(await rides.delete(ride_id));
     } catch (err) {
         next(err);
     }
