@@ -39,8 +39,9 @@ function validateRideId() {
 function getRideDetail() {
     return async (req, res, next) => {
         try {
-            const details = await rides.getRideDetail(req.body.ride_id);
+            const details = await rides.getRideDetail(req.body.request_id);
             if (details) {
+                console.log(details);
                 req.ride_details = details;
                 next();
             }
