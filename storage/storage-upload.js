@@ -6,14 +6,15 @@ const path = require("path");
 const url = require("url");
 
 const router = express.Router();
-
+const accessKeyId = process.env.AWS_ACCESS_KEY || "xxxxxx";
+const secretAccessKey = process.env.AWS_SECRET_KEY || "+xxxxxx+B+xxxxxx";
 /**
  * PROFILE IMAGE STORING STARTS
  */
 const s3 = new aws.S3({
     //need to get the accessJey and the secret key from AWS ask Don
-    //  accessKeyId: '',
-    //  secretAccessKey: '',
+    accessKeyId: accessKeyId,
+    secretAccessKey: secretAccessKey,
     Bucket: "carpal-master"
 });
 

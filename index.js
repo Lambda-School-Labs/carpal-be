@@ -7,10 +7,8 @@ const ridesRouter = require("./rides/rides-router");
 const requestsRouter = require("./requests/requests-router");
 const PORT = process.env.PORT || 3001;
 const HOST = process.env.HOST || "localhost";
-const {
-    verifyToken,
-    validateUserToken,
-} = require("./Middleware/auth");
+const { verifyToken, validateUserToken } = require("./Middleware/auth");
+const profile = require("./storage/storage-upload");
 
 const app = express();
 
@@ -35,12 +33,8 @@ app.use("/locations", verifyToken(), validateUserToken(), locationRouter);
 app.use("/users", verifyToken(), validateUserToken(), usersRouter);
 app.use("/users/rides", verifyToken(), validateUserToken(), usersRidesRouter);
 app.use("/rides", verifyToken(), validateUserToken(), ridesRouter);
-app.use(
-    "/rides/requests",
-    verifyToken(),
-    validateUserToken(),
-    requestsRouter
-);
+app.use("/rides/requests", verifyToken(), validateUserToken(), requestsRouter);
+app.use("/user/profile", profile);
 
 app.use((err, req, res, next) => {
     console.log(err);
