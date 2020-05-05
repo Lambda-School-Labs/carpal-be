@@ -7,8 +7,8 @@ const requestsPost = require("./requests-post");
 const { validateRideId, getRideDetail } = require("../Middleware/rides");
 
 router.use("/", requestsGet);
-router.use("/", validateRideId(), getRideDetail(), requestsPut);
 router.use("/", validateRideId(), requestsDelete);
 router.use("/", validateRideId(), requestsPost);
+router.use("/", validateRideId(), getRideDetail(), requestsPut);
 
 module.exports = router;
