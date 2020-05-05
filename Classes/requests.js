@@ -8,20 +8,20 @@ class Requests extends Models {
     }
 
     //join table functions
-    getSpecificRequest(ride_id, rider_id) {
-        return db(this.name).where({ ride_id, rider_id }).first();
+    getSpecificRequest(id) {
+        return db(this.name).where({ id }).first();
     }
 
     delete(ride_id, rider_id) {
         return db(this.name).where({ ride_id, rider_id }).del();
     }
 
-    async update(ride_id, rider_id, status) {
+    async update(ride_id, id, status) {
         await db(this.name)
-            .where({ ride_id, rider_id })
+            .where({ ride_id, id })
             .update({ status: status })
             .returning("*");
-        return this.getSpecificRequest(ride_id, rider_id);
+        return this.getSpecificRequest(id);
     }
 
     async getByDriver(driver_id) {
@@ -34,7 +34,7 @@ class Requests extends Models {
     }
 
     async findAllBy(filter) {
-        return db(this.name).where(filter)
+        return db(this.name).where(filter);
     }
 }
 
