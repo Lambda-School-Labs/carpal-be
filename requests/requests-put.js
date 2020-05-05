@@ -6,9 +6,13 @@ const client = require("../config/twilio");
 
 router.put("/", async (req, res, next) => {
     try {
-        if (req.body.status === "confirmed") {
+        if (
+            req.body.status.match(
+                /\b(\w*approved|confirm(|ed)|accepted\w*)\b/gi
+            )
+        ) {
             client.messages.create({
-                body: `Your ride has been confirmed`, // add ETA and driver details/name
+                body: `Your ride has been confirmed with ${req.ride_details.driver_name}`, // add ETA
                 from: process.env.TWILIO_FROM_PHONE,
                 to: `+1${req.user.phone_number}`
             });
