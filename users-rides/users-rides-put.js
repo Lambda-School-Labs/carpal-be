@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Rides } = require("../Classes/rides");
-const { validateRideId } = require("../Middleware/auth");
+const { validateRideId } = require("../Middleware/rides");
 
 const rides = new Rides();
 
