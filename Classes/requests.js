@@ -30,7 +30,12 @@ class Requests extends Models {
             .join("users as u", "u.id", "req.rider_id")
             .where({ "r.driver_id": driver_id })
             .whereNot({ "req.status": "declined" })
-            .select("req.rider_id", "u.first_name as rider_name", "req.status");
+            .select(
+                "req.id",
+                "req.rider_id",
+                "u.first_name as rider_name",
+                "req.status"
+            );
     }
 
     async findAllBy(filter) {
