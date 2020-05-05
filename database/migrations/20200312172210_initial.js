@@ -53,7 +53,7 @@ exports.up = async function (knex) {
             .inTable("hobbies")
             .onUpdate("CASCADE")
             .onDelete("CASCADE");
-        tbl.primary(["user_id", "hobby_id"]);
+        tbl.increments();
     });
     await knex.schema.createTable("users_audio_likes", (tbl) => {
         tbl.integer("user_id")
@@ -68,7 +68,7 @@ exports.up = async function (knex) {
             .inTable("audio")
             .onUpdate("CASCADE")
             .onDelete("CASCADE");
-        tbl.primary(["user_id", "audio_id"]);
+        tbl.increments();
     });
     await knex.schema.createTable("users_audio_dislikes", (tbl) => {
         tbl.integer("user_id")
@@ -83,7 +83,7 @@ exports.up = async function (knex) {
             .inTable("audio")
             .onUpdate("CASCADE")
             .onDelete("CASCADE");
-        tbl.primary(["user_id", "audio_id"]);
+        tbl.increments();
     });
     await knex.schema.createTable("favorite_locations", (tbl) => {
         tbl.integer("user_id")
@@ -102,7 +102,7 @@ exports.up = async function (knex) {
             .inTable("locations")
             .onUpdate("CASCADE")
             .onDelete("CASCADE");
-        tbl.primary(["user_id", "location_id"]);
+        tbl.increments();
     });
 };
 exports.down = async function (knex) {
