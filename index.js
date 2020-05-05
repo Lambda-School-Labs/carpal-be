@@ -16,9 +16,8 @@ const helmet = require("helmet");
 
 //Middlewaress
 app.use(express.json());
-
+// app.use(helmet());
 app.use(cors());
-app.use(helmet());
 app.enable("trust proxy");
 
 app.get("/", function (req, res) {
