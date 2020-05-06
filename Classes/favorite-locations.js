@@ -12,7 +12,7 @@ class FavoriteLocations extends Models {
             .join("locations as l", "l.id", "f.location_id")
             .join("users as u", "u.id", "f.user_id")
             .where({ "u.id": user_id })
-            .select("u.id as userId", "l.lat", "l.long", "f.name");
+            .select("f.id","u.id as userId", "l.lat", "l.long", "f.name");
     }
 
     getSpecificFavorite(user_id, location_id) {
@@ -20,7 +20,7 @@ class FavoriteLocations extends Models {
             .join("users as u", "u.id", "f.user_id")
             .join("locations as l", "l.id", "f.location_id")
             .where({ "u.id": user_id, "l.id": location_id })
-            .first("f.name", "l.lat as lat", "l.long as long");
+            .first("f.id","f.name", "l.lat as lat", "l.long as long");
     }
 
     async add(user_id, location_id, name = "") {
