@@ -13,7 +13,6 @@ class UserDetails {
             .join("users as u", "u.id", `db.user_id`)
             .where({ "u.id": user_id })
             .select("t.name");
-        console.log(details);
         return details.map((item) => {
             return item.name;
         });

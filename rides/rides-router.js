@@ -12,20 +12,29 @@ router.get("/", async (req, res, next) => {
             const filteredRides = allRides.filter((ride) => {
                 const isClose = (coor1, coor2) => {
                     // .15 is equal to a 10 mile radius around a coordinate
-                   return Math.abs(coor1 - coor2) < 0.15
+                    return Math.abs(coor1 - coor2) < 0.15;
+                };
+                const startLatDif = isClose(
+                    ride.start_location.lat,
+                    start_location.lat
+                );
+                const startLongDif = isClose(
+                    ride.start_location.long,
+                    start_location.long
+                );
+                const endLongDif = isClose(
+                    ride.end_location.long,
+                    end_location.long
+                );
+                const endLatDif = isClose(
+                    ride.end_location.lat,
+                    end_location.lat
+                );
+                if (startLatDif && startLongDif && endLongDif && endLatDif) {
+                    return ride;
                 }
-                const startLatDif = isClose(ride.start_location.lat, start_location.lat)
-                const startLongDif = isClose(ride.start_location.long, start_location.long)
-                const endLongDif = isClose(ride.end_location.long, end_location.long)
-                const endLatDif = isClose(ride.end_location.lat, end_location.lat)
-                if (startLatDif &&
-                  startLongDif &&
-                  endLongDif &&
-                  endLatDif) {
-                    return ride
-                }
-            })
-            return res.json(filteredRides)
+            });
+            return res.json(filteredRides);
         }
         res.json(allRides);
     } catch (err) {
