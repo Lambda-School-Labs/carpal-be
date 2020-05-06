@@ -12,10 +12,6 @@ class Requests extends Models {
         return db(this.name).where({ id }).first();
     }
 
-    delete(ride_id, rider_id) {
-        return db(this.name).where({ ride_id, rider_id }).del();
-    }
-
     async update(ride_id, id, status) {
         await db(this.name)
             .where({ ride_id, id })
