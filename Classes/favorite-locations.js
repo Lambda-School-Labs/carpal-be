@@ -35,17 +35,17 @@ class FavoriteLocations extends Models {
     }
 
     //join tables won't create a normal id so we pass in the exact object we want to delete
-    delete(user_id, location_id) {
-        return db(this.name).where({ user_id, location_id }).del();
-    }
+    // delete(user_id, location_id) {
+    //     return db(this.name).where({ user_id, location_id }).del();
+    // }
 
-    async update(user_id, name, items) {
-        await db(this.name)
-            .where({ user_id, name })
-            .update(items)
-            .returning("*");
-        return this.getSpecificFavorite(user_id, items.location_id);
-    }
+    // async update(id) {
+    //     await db(this.name)
+    //         .where({ user_id, name })
+    //         .update(items)
+    //         .returning("*");
+    //     return this.getSpecificFavorite(user_id, items.location_id);
+    // }
 }
 
 module.exports = { FavoriteLocations };
