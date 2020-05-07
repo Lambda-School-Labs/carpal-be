@@ -22,8 +22,8 @@ function validateRiderId() {
 
 function validateRideId() {
     return async (req, res, next) => {
+        const ride = await rides.findBy({ id: req.body.ride_id });
         try {
-            const ride = await rides.findBy({ id: req.body.ride_id });
             if (ride) {
                 req.ride = { ...ride };
                 next();
@@ -39,15 +39,11 @@ function validateRideId() {
 function getRideDetail() {
     return async (req, res, next) => {
         try {
-            if (!req.body.request_id) {
+            const details = await rides.getRideDetail(req.body.request_id);
+            if (details) {
+                console.log(details);
+                req.ride_details = details;
                 next();
-            } else {
-                const details = await rides.getRideDetail(req.body.request_id);
-                if (details) {
-                    console.log(details);
-                    req.ride_details = details;
-                    next();
-                }
             }
         } catch (err) {
             next(err);

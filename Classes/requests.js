@@ -34,6 +34,20 @@ class Requests extends Models {
             );
     }
 
+    async getByRider(rider_id){
+        return db(`${this.name} as req`)
+        .join("rides as r", "r.id", "req.ride_id")
+        .join("users as u", "u.id", "r.driver_id")
+        .where({ "req.rider_id": rider_id })
+        .select(
+            "req.id",
+            "u.first_name as driver_name",
+            "r.id as ride_id",
+            "req.status"
+        );
+    }
+
+
     async findAllBy(filter) {
         return db(this.name).where(filter);
     }
