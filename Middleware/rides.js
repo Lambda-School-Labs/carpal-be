@@ -22,8 +22,8 @@ function validateRiderId() {
 
 function validateRideId() {
     return async (req, res, next) => {
-        const ride = await rides.findBy({ id: req.body.ride_id });
         try {
+            const ride = await rides.findBy({ id: req.body.ride_id });
             if (ride) {
                 req.ride = { ...ride };
                 next();
