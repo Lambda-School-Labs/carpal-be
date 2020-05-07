@@ -6,8 +6,8 @@ const users = new Users();
 // create user rider_id validation
 function validateRiderId() {
     return async (req, res, next) => {
-        const user = await users.findBy({ id: req.params.rider_id });
         try {
+            const user = await users.findBy({ id: req.params.rider_id });
             if (user) {
                 req.rider = user;
                 next();
