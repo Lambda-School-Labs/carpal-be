@@ -48,6 +48,15 @@ class Rides extends Models {
                 "sl.long as start_long"
             );
     }
+
+    async getDriverDetails(ride_id) {
+        return db(`${this.name} as r`)
+            .join("users as u", "u.id", "r.driver_id")
+            .join("users_hobbies as uh", "uh.hobby_id", "u.id")
+            .join("hobbies as h", "h.id", "uh.hobby_id")
+            .join("users_audio_likes as ual", "ual.user_id", "u.id")
+            .join("audio as al", "al.id", "ual.audio_id").join("users_audio_dislikes as aud", "aud.user_id", "u.id").join("audio as ad", "ad.id", "aud.audio_id").first("r.id as ride_id", "h.name as hobby");
+    }
 }
 
 module.exports = { Rides };
