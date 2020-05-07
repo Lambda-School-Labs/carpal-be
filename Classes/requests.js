@@ -28,8 +28,22 @@ class Requests extends Models {
             .whereNot({ "req.status": "declined" })
             .select(
                 "req.id",
+                "r.id as ride_id",
                 "req.rider_id",
                 "u.first_name as rider_name",
+                "req.status"
+            );
+    }
+
+    async getByRider(rider_id) {
+        return db(`${this.name} as req`)
+            .join("rides as r", "r.id", "req.ride_id")
+            .join("users as u", "u.id", "r.driver_id")
+            .where({ "req.rider_id": rider_id })
+            .select(
+                "req.id",
+                "u.first_name as driver_name",
+                "r.id as ride_id",
                 "req.status"
             );
     }

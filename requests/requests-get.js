@@ -6,7 +6,7 @@ const requests = new Requests();
 
 router.get("/rider", async (req, res, next) => {
     try {
-        res.json(await requests.findAll().where({ rider_id: req.user.id }));
+        res.json(await requests.getByRider(req.user.id));
     } catch (err) {
         next(err);
     }

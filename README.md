@@ -63,7 +63,7 @@ To get the server running locally:
 | Method | Endpoint                            | Access Control           | Description                               |
 | ------ | ----------------------------------- | ------------------------ | ----------------------------------------- |
 | GET    | `/locations/favorites`              | owner                    | Returns all favorite locations for a user |
-| PUT    | `/locations/favorites/update/:name` | ownerrides/:id/requests/ | Update a user's certain favorite location |
+| PUT    | `/locations/favorites/:id`          | owner                    | Update a user's certain favorite location |
 | POST   | `/locations/favorites`              | owner                    | Add a favorite location for a user        |
 | DELETE | `/locations/favorites/:id`          | owner                    | Delete a user's favorite location         |
 
@@ -79,13 +79,13 @@ To get the server running locally:
 
 ### Request Routes
 
-| Method | Endpoint                  | Access Control | Description                     |
-| ------ | ------------------------- | -------------- | ------------------------------- |
-| GET    | `/rides/:id/requests/all` | owner          | Returns all requests for a user |
-| GET    | `/rides/:id/requests/`    | owner          | Returns all requests for a user |
-| PUT    | `/rides/:id/requests/`    | owner          | Update a user's certain request |
-| POST   | `/rides/:id/requests/`    | owner          | Add a requst for a user         |
-| DELETE | `/rides/:id/requests`     | owner          | Delete a user's request         |
+| Method | Endpoint                  | Access Control | Description                       |
+| ------ | ------------------------- | -------------- | --------------------------------- |
+| GET    | `/rides/requests/driver`  | owner          | Returns all requests for a driver |
+| GET    | `/rides/requests/rider`   | owner          | Returns all requests for a rider  |
+| PUT    | `/rides/requests`         | owner          | Update a user's certain request   |
+| POST   | `/rides/requests`         | owner          | Add a requst for a user           |
+| DELETE | `/rides/requests/:id`     | owner          | Delete a user's request           |
 
 # Data Model
 
@@ -136,22 +136,36 @@ To get the server running locally:
     "start_location_id": 1,
     "end_location_id": 2,
     "status": "pending"
-  }
+}
 ```
 
 #### Request
 
 ---
+##### Driver
 
 ```
-{
-    "id": 1,
-    "driver_id": 1,
+[
+  {
+    "id": 2,
     "rider_id": 2,
-    "start_location_id": 1,
-    "end_location_id": 2,
-    "status": "pending"
+    "rider_name": "daniel"
+    "status": "confirmed"
   }
+]
+```
+
+##### Rider
+
+```
+[
+  {
+    "id": 1,
+    "driver_name": "daniel",
+    "ride_id": 2,
+    "status": "confirmed"
+  }
+]
 ```
 
 ## 2️⃣ Actions
@@ -188,6 +202,8 @@ create a .env file that includes the following:
 -   NODE_ENV - set to "development" until ready for "production"
 -   GOOGLE_CLIENT_ID - a client ID for Google OAuth2
 -   GOOGLE_CLIENT_SECRET - a client secret for Google OAuth2
+-   TWILIO_SID - Twilio account SID
+-   TWILIO_TOKEN - Twilio account token
 
 ## Contributing
 

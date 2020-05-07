@@ -6,8 +6,8 @@ const users = new Users();
 // create user rider_id validation
 function validateRiderId() {
     return async (req, res, next) => {
-        const user = await users.findBy({ id: req.params.rider_id });
         try {
+            const user = await users.findBy({ id: req.params.rider_id });
             if (user) {
                 req.rider = user;
                 next();
@@ -39,15 +39,11 @@ function validateRideId() {
 function getRideDetail() {
     return async (req, res, next) => {
         try {
-            if (!req.body.request_id) {
+            const details = await rides.getRideDetail(req.body.request_id);
+            if (details) {
+                console.log(details);
+                req.ride_details = details;
                 next();
-            } else {
-                const details = await rides.getRideDetail(req.body.request_id);
-                if (details) {
-                    console.log(details);
-                    req.ride_details = details;
-                    next();
-                }
             }
         } catch (err) {
             next(err);
