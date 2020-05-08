@@ -1,8 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const { Rides } = require("../Classes/rides");
+const { UserDetails } = require("../Classes/user-details");
 
 const rides = new Rides();
+
+const hobbiesDB = new UserDetails("hobbies", "users_hobbies");
+
+const audio_likesDB = new UserDetails("audio", "users_audio_likes");
+
+const audio_dislikesDB = new UserDetails("audio", "users_audio_dislikes");
 
 router.get("/", async (req, res, next) => {
     try {
@@ -34,9 +41,30 @@ router.get("/", async (req, res, next) => {
                     return ride;
                 }
             });
-            return res.json(filteredRides);
+
+            const mapped = Promise.all(
+                filteredRides.map(async (cur) => {
+                    const hobbies = await hobbiesDB.findByUser(cur.driver_id);
+                    const audio_likes = await audio_likesDB.findByUser(
+                        cur.driver_id
+                    );
+                    const audio_dislikes = await audio_dislikesDB.findByUser(
+                        cur.driver_id
+                    );
+
+                    return {
+                        ...cur,
+                        hobbies,
+                        audio_likes,
+                        audio_dislikes
+                    };
+                })
+            );
+
+            res.json(await mapped);
+        } else {
+            res.json(allRides);
         }
-        res.json(allRides);
     } catch (err) {
         next(err);
     }
