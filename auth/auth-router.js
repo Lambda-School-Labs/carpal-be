@@ -11,7 +11,7 @@ const {
     validateRegisterReqBody
 } = require("../Middleware/auth");
 const googleStrat = require("../config/google-strategy");
-const generateToken = require('../utils/generateToken')
+const generateToken = require("../utils/generateToken");
 const users = new Users();
 
 passport.use(googleStrat);
@@ -89,6 +89,8 @@ router.get("/", verifyToken(), validateUserToken(), async (req, res, next) => {
     }
 });
 
+// maybe possible to make a function that generates a route depending on env, so we dont have unused routes in production
+
 //GOOGLE AUTH
 
 router.get(
@@ -104,7 +106,9 @@ router.get(
         failureRedirect: "https://www.letscarpal.com"
     }),
     function (req, res) {
-        res.redirect("https://www.letscarpal.com");
+        const token = generateToken(req.user);
+        res.cookie("auth", token);
+        res.redirect("https://www.letscarpal.com/login");
     }
 );
 
@@ -122,7 +126,9 @@ router.get(
         failureRedirect: "https://staging.d3ic1rxl46vguk.amplifyapp.com/"
     }),
     function (req, res) {
-        res.redirect("https://staging.d3ic1rxl46vguk.amplifyapp.com/");
+        const token = generateToken(req.user);
+        res.cookie("auth", token);
+        res.redirect("https://staging.d3ic1rxl46vguk.amplifyapp.com/login");
     }
 );
 
@@ -143,7 +149,7 @@ router.get(
     function (req, res) {
         const token = generateToken(req.user);
         res.cookie("auth", token);
-        res.redirect("http://localhost:3000/");
+        res.redirect("http://localhost:3000/login");
     }
 );
 
