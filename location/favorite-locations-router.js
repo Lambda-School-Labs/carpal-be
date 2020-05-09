@@ -29,11 +29,19 @@ router.post("/", checkBody(), locationCheck(), async (req, res, next) => {
     try {
         if (req.addedLocation) {
             res.status(201).json(
-                await FaveLocations.add(req.user.id, req.addedLocation.id)
+                await FaveLocations.add(
+                    req.user.id,
+                    req.addedLocation.id,
+                    req.body.name
+                )
             );
         } else {
             res.status(201).json(
-                await FaveLocations.add(req.user.id, req.location.id)
+                await FaveLocations.add(
+                    req.user.id,
+                    req.location.id,
+                    req.body.name
+                )
             );
         }
     } catch (err) {

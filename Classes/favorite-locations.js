@@ -22,7 +22,7 @@ class FavoriteLocations extends Models {
             .first("f.id", "f.name", "l.lat as lat", "l.long as long");
     }
 
-    async add(user_id, location_id, name = "") {
+    async add(user_id, location_id, name) {
         const [addedLocation] = await db(this.name)
             .insert({
                 user_id,
