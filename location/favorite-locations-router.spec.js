@@ -57,13 +57,12 @@ describe("Favorite locations", () => {
             name: "Burger King"
         };
         const res = await supertest(server)
-            .put("/locations/favorites/update/Gym")
+            .put("/locations/favorites/1")
             .send(newLocation)
             .set({ authorization: user.body.token });
 
         expect(res.status).toBe(200);
         expect(res.type).toEqual("application/json");
-        expect(res.body).toHaveProperty("name", "Burger King");
-        expect(res.body).toHaveProperty("lat", 38.384318267773);
+        expect(res.body.name).toBe("Burger King");
     });
 });
