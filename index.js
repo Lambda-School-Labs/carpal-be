@@ -14,18 +14,13 @@ const app = express();
 
 const cors = require("cors");
 const helmet = require("helmet");
-const allowedOrigins = [
-    "http://localhost:3000",
-    "https://letscarpal.com",
-    "https://staging.d3ic1rxl46vguk.amplifyapp.com/"
-];
 
 //Middlewaress
 app.use(express.json());
 app.use(helmet());
 app.use(
     cors({
-        origin: allowedOrigins
+        origin: "*"
     })
 );
 app.enable("trust proxy");
