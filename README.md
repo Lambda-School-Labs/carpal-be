@@ -2,21 +2,13 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/a8ec7fda3d1cf5e2c7b1/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/carpal-be/test_coverage)
 
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
-
-🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by. Make sure to delete the numbers by the end of Labs.
-
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric. Contributing to docs does NOT count as a PR to meet your weekly requirements.
-
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+#### Backend delpoyed at [heroku](https://carpal-production.herokuapp.com/) <br>
 
-## 1️⃣ Getting started
+## Getting started
 
 To get the server running locally:
-
-🚫 adjust these scripts to match your project
 
 -   Clone this repo and cd into carpal-be directory
 -   **npm install** to install all required dependencies
@@ -27,18 +19,26 @@ To get the server running locally:
 
 ### Express.js
 
-🚫 Why did you choose this framework?
+Why did we choose this framework?
 
 -   Simplicity
 -   Minimal lines of code
 -   Flexible
 -   Scalable
 
-## 2️⃣ Endpoints
+## Endpoints
 
-🚫This is a placeholder, replace the endpoints, access control, and description to match your project
+### User Routes
 
-#### Location Routes
+| Method | Endpoint         | Access Control | Description                                      |
+| ------ | ---------------- | -------------- | ------------------------------------------------ |
+| POST   | `/auth/register` | all users      | Allows user to create an account                 |
+| POST   | `/auth/login`    | all users      | Allows user to authenticate and log into account |
+| GET    | `/auth`          | owner          | Allows for user retrieval from a token           |
+| PUT    | `/users/update`  | owner          | Allows user to update their account              |
+| DELETE | `/users/delete`  | owner          | Allows user to delete their account              |
+
+### Location Routes
 
 | Method | Endpoint         | Access Control | Description                                |
 | ------ | ---------------- | -------------- | ------------------------------------------ |
@@ -48,60 +48,44 @@ To get the server running locally:
 | PUT    | `/locations/:id` | owner          | Allows user to enter to update a location  |
 | DELETE | `/locations/:id` | owner          | Delete a location                          |
 
-#### User Routes
+#### Favorite Locations Routes
 
-| Method | Endpoint         | Access Control | Description                                      |
-| ------ | ---------------- | -------------- | ------------------------------------------------ |
-| POST   | `/auth/register` | all users      | Allows user to create an account                 |
-| POST   | `/auth/login`    | all users      | Allows user to authenticate and log into account |
-| GET    | `/auth`          | all users      | Allows for user retrieval from a token           |
-| PUT    | `/users/update`  | owner          | Allows user to update their account              |
-| DELETE | `/users/delete`  | owner          | Allows user to delete their account              |
+| Method | Endpoint                   | Access Control | Description                               |
+| ------ | -------------------------- | -------------- | ----------------------------------------- |
+| GET    | `/locations/favorites`     | owner          | Returns all favorite locations for a user |
+| GET    | `/locations/favorites/:id` | owner          | Return a specific favorite location       |
+| PUT    | `/locations/favorites/:id` | owner          | Update a user's certain favorite location |
+| POST   | `/locations/favorites`     | owner          | Add a favorite location for a user        |
+| DELETE | `/locations/favorites/:id` | owner          | Delete a user's favorite location         |
 
-### Favorite Locations Routes
+### Users Rides Routes
 
-| Method | Endpoint                            | Access Control           | Description                               |
-| ------ | ----------------------------------- | ------------------------ | ----------------------------------------- |
-| GET    | `/locations/favorites`              | owner                    | Returns all favorite locations for a user |
-| PUT    | `/locations/favorites/update/:name` | ownerrides/:id/requests/ | Update a user's certain favorite location |
-| POST   | `/locations/favorites`              | owner                    | Add a favorite location for a user        |
-| DELETE | `/locations/favorites/:id`          | owner                    | Delete a user's favorite location         |
-
-### Rides Routes
-
-| Method | Endpoint          | Access Control | Description                       |
-| ------ | ----------------- | -------------- | --------------------------------- |
-| GET    | `/user/rides`     | owner          | Returns all rides for a user      |
-| GET    | `/user/rides/:id` | owner          | Returns aspecific ride for a user |
-| PUT    | `/user/rides/:id` | owner          | Update a user's ride              |
-| POST   | `/user/rides/`    | owner          | Add a ride for a user             |
-| DELETE | `/user/rides/:id` | owner          | Delete a user's ride              |
+| Method | Endpoint           | Access Control | Description                                               |
+| ------ | ------------------ | -------------- | --------------------------------------------------------- |
+| GET    | `/users/rides`     | owner          | Returns all rides for a user                              |
+| GET    | `/users/rides/:id` | owner          | Returns aspecific ride for a user, including all requests |
+| PUT    | `/users/rides`     | owner          | Update a user's ride                                      |
+| POST   | `/users/rides`     | owner          | Add a ride for a user                                     |
+| DELETE | `/users/rides`     | owner          | Delete a user's ride                                      |
 
 ### Request Routes
 
-| Method | Endpoint                  | Access Control | Description                     |
-| ------ | ------------------------- | -------------- | ------------------------------- |
-| GET    | `/rides/:id/requests/all` | owner          | Returns all requests for a user |
-| GET    | `/rides/:id/requests/`    | owner          | Returns all requests for a user |
-| PUT    | `/rides/:id/requests/`    | owner          | Update a user's certain request |
-| POST   | `/rides/:id/requests/`    | owner          | Add a requst for a user         |
-| DELETE | `/rides/:id/requests`     | owner          | Delete a user's request         |
+| Method | Endpoint                 | Access Control | Description                       |
+| ------ | ------------------------ | -------------- | --------------------------------- |
+| GET    | `/rides/requests/driver` | owner          | Returns all requests for a driver |
+| GET    | `/rides/requests/rider`  | owner          | Returns all requests for a rider  |
+| PUT    | `/rides/requests`        | owner          | Update a user's certain request   |
+| POST   | `/rides/requests`        | owner          | Add a requst for a user           |
+| DELETE | `/rides/requests/:id`    | owner          | Delete a user's request           |
+
+### Rides Routes
+
+| Method | Endpoint    | Access Control | Description                                                                           |
+| ------ | ----------- | -------------- | ------------------------------------------------------------------------------------- |
+| GET    | `/rides`    | all users      | Returns all rides, or if sent a start_location and end_location, returns nearby rides |
+| GET    | `/rides/id` | all users      | Returns a specific ride                                                               |
 
 # Data Model
-
-🚫This is just an example. Replace this with your data model
-
-#### 2️⃣ LOCATIONS
-
----
-
-```
-{
-  "id": 1,
-  "lat": 39.385348651562,
-  "long": -99.797763874469
-}
-```
 
 #### USERS
 
@@ -124,7 +108,19 @@ To get the server running locally:
 }
 ```
 
-#### Rides
+#### LOCATIONS
+
+---
+
+```
+{
+  "id": 1,
+  "lat": 39.385348651562,
+  "long": -99.797763874469
+}
+```
+
+#### RIDES
 
 ---
 
@@ -136,27 +132,43 @@ To get the server running locally:
     "start_location_id": 1,
     "end_location_id": 2,
     "status": "pending"
-  }
+}
 ```
 
-#### Request
+#### REQUESTS
 
 ---
 
+##### Driver
+
 ```
-{
-    "id": 1,
-    "driver_id": 1,
+[
+  {
+    "id": 2,
     "rider_id": 2,
-    "start_location_id": 1,
-    "end_location_id": 2,
-    "status": "pending"
+    "ride_id": 2,
+    "rider_name": "daniel",
+    "status": "confirmed"
   }
+]
 ```
 
-## 2️⃣ Actions
+##### Rider
 
-🚫 This is an example, replace this with the actions that pertain to your backend
+```
+[
+  {
+    "id": 1,
+    "driver_name": "daniel",
+    "ride_id": 2,
+    "status": "confirmed"
+  }
+]
+```
+
+## Actions
+
+### Models
 
 `findBy(filter)` -> find a single item using a filter (ie email, address, etc.)
 
@@ -167,14 +179,34 @@ To get the server running locally:
 `update(id, item)` -> Update a location using the id from req.params
 
 `delete(id)` -> Delete a record using id from req.params
-<br>
-<br>
-<br>
-`verifyToken()` -> verifies that user is authorized. Checks if they have a token
+
+### Auth
+
+`verifyToken()` -> Verifies that user is authorized. Checks if they have a token
 
 `validateUserToken()` -> Returns user information from token
 
-## 3️⃣ Environment Variables
+`validateLoginReqBody()` -> Checks request body for email and password
+
+`validateRegisterReqBody()` -> Checks request body for email, password, first_name and last_name
+
+`userExist()` -> Searches for user by email and sets returned user object to req.data.user
+
+### Locations
+
+`locationCheck()` -> Searches for location by lat and long and sets returned location object to req.location if exists
+
+`checkBody()` -> Checks request body for lat and long
+
+`validateRiderId()` -> Searches for user by id and sets returned user object to req.rider
+
+`validateRideId()` -> Searches for ride by id and sets returned ride object to req.ride
+
+`getRideDetail()` -> Searches for request by id and sets returned request object to req.ride_details
+
+`checkArrays()` -> Checks request body for audioDislikes, audioLikes and hobbies
+
+## Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
@@ -188,6 +220,8 @@ create a .env file that includes the following:
 -   NODE_ENV - set to "development" until ready for "production"
 -   GOOGLE_CLIENT_ID - a client ID for Google OAuth2
 -   GOOGLE_CLIENT_SECRET - a client secret for Google OAuth2
+-   TWILIO_SID - Twilio account SID
+-   TWILIO_TOKEN - Twilio account token
 
 ## Contributing
 
@@ -228,5 +262,4 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
-🚫 Add DS iOS and/or Andriod links here if applicable.
+See [Frontend Documentation](https://github.com/Lambda-School-Labs/carpal-fe) for details on the fronend of our project.

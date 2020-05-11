@@ -14,12 +14,13 @@ beforeEach(async () => {
     user = await userDB.findBy({ email: "dang@carpal.com" });
 });
 
+
 describe("UserDetails class functions", () => {
     test("Add Hobbies", async () => {
         const hobbyResult = await hobbiesDB.add(user.id, ["sports", "biking"]);
 
-        expect(hobbyResult[1]).toHaveProperty("name", "sports");
-        expect(hobbyResult[2]).toHaveProperty("name", "biking");
+        expect(hobbyResult[2]).toHaveProperty("name", "sports");
+        expect(hobbyResult[1]).toHaveProperty("name", "biking");
     });
 
     test("Add Audio Likes", async () => {

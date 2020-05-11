@@ -4,9 +4,10 @@ const { Requests } = require("../Classes/requests");
 
 const requests = new Requests();
 
-router.delete("/", async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
     try {
-        res.status(204).json(await requests.delete(req.ride.id, req.user.id));
+        const deleteRes = await requests.delete(req.params.id);
+        res.status(204).json(deleteRes);
     } catch (err) {
         next(err);
     }

@@ -2,15 +2,13 @@ const express = require("express");
 const authRouter = require("./auth/auth-router");
 const locationRouter = require("./location/location-router");
 const usersRouter = require("./users/users-router");
+const usersRidesRouter = require("./users-rides/users-rides-router");
 const ridesRouter = require("./rides/rides-router");
 const requestsRouter = require("./requests/requests-router");
 const PORT = process.env.PORT || 3001;
 const HOST = process.env.HOST || "localhost";
-const {
-    verifyToken,
-    validateUserToken,
-    validateRideId
-} = require("./Middleware/auth");
+const { verifyToken, validateUserToken } = require("./Middleware/auth");
+const profile = require("./storage/profile-img-upload-post");
 
 const app = express();
 
@@ -20,8 +18,11 @@ const helmet = require("helmet");
 //Middlewaress
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
-
+app.use(
+    cors({
+        origin: "*"
+    })
+);
 app.enable("trust proxy");
 
 app.get("/", function (req, res) {
@@ -33,14 +34,10 @@ app.get("/", function (req, res) {
 app.use("/auth", authRouter);
 app.use("/locations", verifyToken(), validateUserToken(), locationRouter);
 app.use("/users", verifyToken(), validateUserToken(), usersRouter);
-app.use("/users/rides", verifyToken(), validateUserToken(), ridesRouter);
-app.use(
-    "/rides/:id/requests",
-    verifyToken(),
-    validateUserToken(),
-    validateRideId(),
-    requestsRouter
-);
+app.use("/users/rides", verifyToken(), validateUserToken(), usersRidesRouter);
+app.use("/rides", verifyToken(), validateUserToken(), ridesRouter);
+app.use("/rides/requests", verifyToken(), validateUserToken(), requestsRouter);
+app.use("/profile", profile);
 
 app.use((err, req, res, next) => {
     console.log(err);
