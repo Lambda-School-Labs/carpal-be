@@ -42,6 +42,7 @@ class Requests extends Models {
             .where({ "req.rider_id": rider_id })
             .select(
                 "req.id",
+                "u.id as driver_id",
                 "u.first_name as driver_name",
                 "r.id as ride_id",
                 "req.status"
