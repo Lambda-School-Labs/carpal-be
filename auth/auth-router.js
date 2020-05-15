@@ -45,15 +45,17 @@ router.post(
             }
             const userObj = await users.add(user);
 
-            client.validationRequests
-                .create({
-                    friendlyName: `${userObj.first_name} ${userObj.last_name}`,
-                    phoneNumber: `+1${userObj.phone_number}`
-                })
-                .then((result) => console.log(result.friendlyName))
-                .catch((err) =>
-                    console.log("Error adding phone number to twilio")
-                );
+            if (userObj.phone_number !== 555555555) {
+                client.validationRequests
+                    .create({
+                        friendlyName: `${userObj.first_name} ${userObj.last_name}`,
+                        phoneNumber: `+1${userObj.phone_number}`
+                    })
+                    .then((result) => console.log(result.friendlyName))
+                    .catch((err) =>
+                        console.log("Error adding phone number to twilio")
+                    );
+            }
 
             const token = generateToken(userObj);
 
