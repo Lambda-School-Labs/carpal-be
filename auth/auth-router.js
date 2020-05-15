@@ -48,7 +48,7 @@ router.post(
             client.validationRequests
                 .create({
                     friendlyName: `${userObj.first_name} ${userObj.last_name}`,
-                    phoneNumber: userObj.phone_number
+                    phoneNumber: `+1${userObj.phone_number}`
                 })
                 .then((result) => console.log(result.friendlyName))
                 .catch((err) =>

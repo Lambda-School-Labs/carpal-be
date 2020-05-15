@@ -32,11 +32,11 @@ router.put("/update", checkArrays(), async (req, res, next) => {
             user = await users.update(req.user.id, userBody);
 
             // add users' new number to twilio validator
-            if (user.phone_number !== userBody.phone_number) {
+            if (req.user.phone_number !== userBody.phone_number) {
                 client.validationRequests
                     .create({
                         friendlyName: `${user.first_name} ${user.last_name}`,
-                        phoneNumber: user.phone_number
+                        phoneNumber: `+1${user.phone_number}`
                     })
                     .then((result) => console.log(result.friendlyName))
                     .catch((err) =>
