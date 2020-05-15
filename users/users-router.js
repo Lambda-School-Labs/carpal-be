@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+const client = require("../config/twilio");
 const { Users } = require("../Classes/users");
 const { UserDetails } = require("../Classes/user-details");
 const { checkArrays } = require("../Middleware/updateUser");
@@ -29,6 +30,19 @@ router.put("/update", checkArrays(), async (req, res, next) => {
         //if user profile has changed, update it, if not skip
         if (req.user !== userBody) {
             user = await users.update(req.user.id, userBody);
+
+            // add users' new number to twilio validator
+            if (user.phone_number !== userBody.phone_number) {
+                client.validationRequests
+                    .create({
+                        friendlyName: `${user.first_name} ${user.last_name}`,
+                        phoneNumber: user.phone_number
+                    })
+                    .then((result) => console.log(result.friendlyName))
+                    .catch((err) =>
+                        console.log("Error added phone number to twilio")
+                    );
+            }
         } else {
             user = req.user;
         }
