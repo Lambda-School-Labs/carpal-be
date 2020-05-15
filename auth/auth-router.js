@@ -13,7 +13,7 @@ const {
 const googleStrat = require("../config/google-strategy");
 const generateToken = require("../utils/generateToken");
 const users = new Users();
-const client = require("../config/twilio");
+const addNumber = require("../utils/twilioAddNumbers");
 
 passport.use(googleStrat);
 
@@ -46,15 +46,7 @@ router.post(
             const userObj = await users.add(user);
 
             if (userObj.phone_number !== 555555555) {
-                client.validationRequests
-                    .create({
-                        friendlyName: `${userObj.first_name} ${userObj.last_name}`,
-                        phoneNumber: `+1${userObj.phone_number}`
-                    })
-                    .then((result) => console.log(result.friendlyName))
-                    .catch((err) =>
-                        console.log("Error adding phone number to twilio")
-                    );
+                addNumber(userObj);
             }
 
             const token = generateToken(userObj);
