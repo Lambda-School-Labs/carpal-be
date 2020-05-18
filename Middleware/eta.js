@@ -10,7 +10,8 @@ function eta(driverStart, riderStart) {
                 `https://api.mapbox.com/directions/v5/mapbox/driving/${driverStart};${riderStart}?access_token=pk.eyJ1IjoiY2FycGFsIiwiYSI6ImNrNzZ2d2E2ZjAxZXkzbHFoamVrODRkOXgifQ.4WqV3ntXJEq7X8L2ea1fHw`
             )
             .then((res) => {
-                let rideETA = Math.round(res.routes.duration) / 60;
+                //takes route duration in seconds, converts it to minutes and then rounds it
+                let rideETA = Math.round(res.routes.duration / 60);
                 console.log(rideETA);
             })
             .catch((err) => {
