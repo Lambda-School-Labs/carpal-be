@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const { Requests } = require("../Classes/requests");
+const addDriverDetails = require("../Middleware/requests");
+const { twilioDriver } = require("../Middleware/twilio");
 
 const requests = new Requests();
 
-router.post("/", async (req, res, next) => {
+router.post("/", addDriverDetails(), twilioDriver(), async (req, res, next) => {
     try {
         const requestBody = {
             ride_id: req.ride.id,

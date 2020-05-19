@@ -1,31 +1,30 @@
 const client = require("../config/twilio");
 const axios = require("axios");
 
-//Need Driver start location, rider location, rider phone number
-
-//TODO - Can I use return value from one middleware in the next?
+//TODO- DATA NEEDED - Need Driver start location, rider location, rider phone number
 //TODO - Update request destructuing (and possible insert necessary DB calls)
-//TODO - Add
 
 //Calculate eta between drivers start and rider pickup
 function eta() {
+    const mapboxToken =
+        "pk.eyJ1IjoiY2FycGFsIiwiYSI6ImNrNzZ2d2E2ZjAxZXkzbHFoamVrODRkOXgifQ.4WqV3ntXJEq7X8L2ea1fHw";
     return async (req, res, next) => {
         const { driverStart, riderStart } = req.body;
         console.log(driverStart, riderStart);
         await axios
             .get(
-                `https://api.mapbox.com/directions/v5/mapbox/driving/${driverStart};${riderStart}?access_token=pk.eyJ1IjoiY2FycGFsIiwiYSI6ImNrNzZ2d2E2ZjAxZXkzbHFoamVrODRkOXgifQ.4WqV3ntXJEq7X8L2ea1fHw`
+                `https://api.mapbox.com/directions/v5/mapbox/driving/${driverStart};${riderStart}?access_token=${mapboxToken}`
             )
             .then((res) => {
                 //takes route duration in seconds, converts it to minutes and then rounds it
                 let rideETA = Math.round(res.routes.duration / 60);
                 console.log(rideETA);
-                return riderETA;
+                req.eta = rideETA;
                 next();
             })
             .catch((err) => {
                 console.log(err);
-                next();
+                next(err);
             });
     };
 }
@@ -35,13 +34,13 @@ function eta() {
 
 function twilioRider() {
     return (req, res, next) => {
-        const { rider_phone_number } = req.body;
-        console.log(rider_phone_number);
-        if (rider_phone_number) {
-            client.messages.create({
-                body: `Your ride has been confirmed. Your driver will be there in ${rideETA}`,
-                from: process.env.TWILIO_FROM_PHONE,
-                to: `+1${rider_phone_number}`
+        if (req.numbers.length > 1) {
+            req.numbers.forEach((cur) => {
+                client.messages.create({
+                    body: `Your ride has been confirmed. Your driver will be there in 5 minutes`,
+                    from: process.env.TWILIO_FROM_PHONE,
+                    to: `+1${cur}`
+                });
             });
 
             next();
@@ -55,7 +54,7 @@ function twilioRider() {
 
 function twilioDriver() {
     return async (req, res, next) => {
-        const { driver_phone_number } = req.body;
+        const driver_phone_number = req.driver.driver_number;
         console.log(driver_phone_number);
         if (driver_phone_number) {
             client.messages.create({
