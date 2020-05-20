@@ -12,7 +12,7 @@ class FavoriteLocations extends Models {
             .join("locations as l", "l.id", "f.location_id")
             .join("users as u", "u.id", "f.user_id")
             .where({ "u.id": user_id })
-            .select("f.id", "u.id as userId", "l.lat", "l.long", "f.name");
+            .select("f.id", "u.id as userId", "l.lat", "l.long", "f.name", "f.location_id");
     }
 
     getSpecificFavorite(id) {
