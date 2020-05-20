@@ -6,8 +6,7 @@ const locations = new Models("locations");
 
 //Calculate eta between drivers start and rider pickup
 function eta() {
-    const mapboxToken =
-        "pk.eyJ1IjoiY2FycGFsIiwiYSI6ImNrNzZ2d2E2ZjAxZXkzbHFoamVrODRkOXgifQ.4WqV3ntXJEq7X8L2ea1fHw";
+    const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN;
     return async (req, res, next) => {
         try {
             const riderStart = req.start.long + "," + req.start.lat;
