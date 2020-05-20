@@ -35,9 +35,22 @@ exports.up = async function (knex) {
             .inTable("users")
             .onUpdate("CASCADE")
             .onDelete("CASCADE");
+        tbl.integer("rider_start_location_id")
+            .notNullable()
+            .references("id")
+            .inTable("locations")
+            .onUpdate("CASCADE")
+            .onDelete("CASCADE");
+        tbl.integer("rider_end_location_id")
+            .notNullable()
+            .references("id")
+            .inTable("locations")
+            .onUpdate("CASCADE")
+            .onDelete("CASCADE");
         tbl.string("status").defaultTo("pending");
         tbl.increments();
     });
+    // these columns can be displayed nested in a given ride as an array of requests
 };
 
 exports.down = async function (knex) {

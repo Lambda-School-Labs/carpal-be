@@ -13,6 +13,7 @@ const {
 const googleStrat = require("../config/google-strategy");
 const generateToken = require("../utils/generateToken");
 const users = new Users();
+const addNumber = require("../utils/twilioAddNumbers");
 
 passport.use(googleStrat);
 
@@ -43,6 +44,10 @@ router.post(
                 });
             }
             const userObj = await users.add(user);
+
+            if (userObj.phone_number !== 555555555) {
+                addNumber(userObj);
+            }
 
             const token = generateToken(userObj);
 
