@@ -44,7 +44,49 @@ const checkBody = () => {
     };
 };
 
+const requestLocationCheck = () => {
+    return async (req, res, next) => {
+        try {
+            const startLocation = await locations.findBy({
+                lat: req.body.rider_start_lat,
+                long: req.body.rider_start_long
+            });
+
+            const endLocation = await locations.findBy({
+                lat: req.body.rider_end_lat,
+                long: req.body.rider_end_long
+            });
+
+            if (startLocation) {
+                req.rider_start = startLocation;
+            } else {
+                const start = await locations.add({
+                    lat: req.body.rider_start_lat,
+                    long: req.body.rider_start_long
+                });
+
+                req.rider_start = start;
+            }
+
+            if (endLocation) {
+                req.rider_end = endLocation;
+            } else {
+                const end = await locations.add({
+                    lat: req.body.rider_end_lat,
+                    long: req.body.rider_end_long
+                });
+
+                req.rider_end = end;
+            }
+            next();
+        } catch (err) {
+            next(err);
+        }
+    };
+};
+
 module.exports = {
     locationCheck,
-    checkBody
+    checkBody,
+    requestLocationCheck
 };

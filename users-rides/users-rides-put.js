@@ -10,6 +10,7 @@ router.put(
     "/",
     validateRideId(),
     rideStarted(),
+    eta(),
     twilioRider(),
     async (req, res, next) => {
         const {

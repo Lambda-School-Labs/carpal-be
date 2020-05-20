@@ -72,8 +72,8 @@ function rideStarted() {
                         }
                         start.lat = ride.start_lat;
                         start.long = ride.start_long;
-                        // end.lat = ride.end_lat;
-                        // end.long = ride.end_long;
+                        end.lat = ride.end_lat;
+                        end.long = ride.end_long;
                         return cur;
                     })
                 );
@@ -81,7 +81,6 @@ function rideStarted() {
                 req.start = start;
                 req.end = end;
                 req.numbers = rider_numbers;
-                console.log(req.numbers);
                 next();
             } else {
                 next();
