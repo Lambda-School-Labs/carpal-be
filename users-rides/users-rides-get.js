@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Rides } = require("../Classes/rides");
 const { Requests } = require("../Classes/requests");
+const { getRidersStart } = require("../Middleware/rides");
 
 const rides = new Rides();
 const requests = new Requests();
@@ -21,8 +22,8 @@ router.get("/:id", async (req, res, next) => {
         });
         const requestsDetails = await requests.findAllBy({
             ride_id: req.params.id
-        })
-        const rideDetails = { ...ride, requests: requestsDetails }
+        });
+        const rideDetails = { ...ride, requests: requestsDetails };
         if (!ride || ride.length < 1) {
             res.status(404).json({
                 message: "ride id not found for current user"
@@ -34,4 +35,11 @@ router.get("/:id", async (req, res, next) => {
     }
 });
 
+router.get("/riderStart/:id",getRidersStart(), async (req, res, next) => {
+    try {
+        res.json(req.riderStarts)
+    } catch (err) {
+        next(err);
+    }
+});
 module.exports = router;

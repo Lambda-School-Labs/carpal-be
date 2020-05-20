@@ -9,23 +9,32 @@ function eta() {
     const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN;
     return async (req, res, next) => {
         try {
-            const riderStart = req.start.long + "," + req.start.lat;
+            // changed to array, since we will have multiple ETA's
+            // syncing this up to the numbers is another story..
+            const etas = await Promise.all(
+                req.start.map(async (cur) => {
+                    const riderStart = `${cur.long},${cur.lat}`;
 
-            const driverStartObj = await locations.findBy({
-                id: req.body.start_location_id
-            });
-            const driverStart = driverStartObj.long + "," + driverStartObj.lat;
+                    const driverStartObj = await locations.findBy({
+                        id: req.body.start_location_id
+                    });
 
-            const res = await axios.get(
-                `https://api.mapbox.com/directions/v5/mapbox/driving/${driverStart};${riderStart}?access_token=${mapboxToken}`
+                    const driverStart = `${driverStartObj.long},${driverStartObj.lat}`;
+
+                    const result = await axios.get(
+                        `https://api.mapbox.com/directions/v5/mapbox/driving/${driverStart};${riderStart}?access_token=${mapboxToken}`
+                    );
+
+                    let rideETA;
+                    if (result.data.routes[0].duration > 0) {
+                        rideETA = Math.round(result.data.routes[0].duration / 60);
+                    } else {
+                        rideETA = 0;
+                    }
+                    return rideETA;
+                })
             );
-            let rideETA;
-            if (res.data.routes[0].duration > 0) {
-                rideETA = Math.round(res.data.routes[0].duration / 60);
-            } else {
-                rideETA = 0;
-            }
-            req.eta = rideETA;
+            req.ETA = etas;
             next();
         } catch (err) {
             next(err);
@@ -40,11 +49,11 @@ function twilioRider() {
     return (req, res, next) => {
         if (req.numbers.length > 0) {
             const filtered = [...new Set(req.numbers)];
-            filtered.forEach((cur) => {
+            filtered.forEach((cur, i) => {
                 client.messages.create({
-                    body: `Your ride has been confirmed. Your driver will be there in ${req.eta} minutes`,
+                    body: `Your ride has been confirmed. Your driver will be there in ${req.ETA[i]} minutes`, // an attempt to sync number to ETA 
                     from: process.env.TWILIO_FROM_PHONE,
-                    to: `+1${cur}`
+                    to: `+1${cur}`  
                 });
             });
 
