@@ -12,7 +12,7 @@ function eta() {
             // changed to array, since we will have multiple ETA's
             // syncing this up to the numbers is another story..
             const etas = await Promise.all(
-                req.start.map(async (cur) => {
+                req.riders.map(async (cur) => {
                     const riderStart = `${cur.long},${cur.lat}`;
 
                     const driverStartObj = await locations.findBy({
@@ -27,11 +27,15 @@ function eta() {
 
                     let rideETA;
                     if (result.data.routes[0].duration > 0) {
-                        rideETA = Math.round(result.data.routes[0].duration / 60);
+                        rideETA = Math.round(
+                            result.data.routes[0].duration / 60
+                        );
                     } else {
                         rideETA = 0;
                     }
-                    return rideETA;
+                    cur.eta = rideETA; // update the current eta
+
+                    return cur;
                 })
             );
             req.ETA = etas;
@@ -47,13 +51,13 @@ function eta() {
 
 function twilioRider() {
     return (req, res, next) => {
-        if (req.numbers.length > 0) {
-            const filtered = [...new Set(req.numbers)];
-            filtered.forEach((cur, i) => {
+        if (req.riders.length > 0) {
+            const filtered = [...new Set(req.riders)];
+            filtered.forEach((cur) => {
                 client.messages.create({
-                    body: `Your ride has been confirmed. Your driver will be there in ${req.ETA[i]} minutes`, // an attempt to sync number to ETA 
+                    body: `Your ride has been confirmed. Your driver will be there in ${cur.eta} minutes`, // an attempt to sync number to ETA
                     from: process.env.TWILIO_FROM_PHONE,
-                    to: `+1${cur}`  
+                    to: `+1${cur.phone_number}`
                 });
             });
 
