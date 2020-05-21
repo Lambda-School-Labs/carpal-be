@@ -5,9 +5,9 @@ const { validateRideId } = require("../Middleware/rides");
 
 const rides = new Rides();
 
-router.delete("/", validateRideId(), async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
     try {
-        const ride_id = req.body.ride_id;
+        const ride_id = req.params.id;
         res.status(204).json(await rides.delete(ride_id));
     } catch (err) {
         next(err);
