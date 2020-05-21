@@ -35,9 +35,14 @@ router.get("/:id", async (req, res, next) => {
     }
 });
 
-router.get("/riderStart/:id",getRidersStart(), async (req, res, next) => {
+router.get("/riderStart/:id", getRidersStart(), async (req, res, next) => {
     try {
-        res.json(req.riderStarts)
+        const locations = {
+            riderStops: req.riderStarts,
+            driverRoute: req.locations
+        };
+
+        res.json(locations);
     } catch (err) {
         next(err);
     }

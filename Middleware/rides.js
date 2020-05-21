@@ -111,13 +111,18 @@ function getRidersStart() {
                 requestDetails.map(async (cur) => {
                     const ride = await rides.getRideDetail(cur.id);
                     start.push({
+                        rider: ride.rider_name,
+                        rider_number: ride.rider_phone_number,
                         lat: ride.start_lat,
                         long: ride.start_long
                     });
                     return cur;
                 })
             );
+            
+            const location = await rides.getRideLocations(req.params.id);
 
+            req.locations = location;
             req.riderStarts = start;
             next();
         } catch (err) {
