@@ -1,9 +1,11 @@
 const { Rides } = require("../Classes/rides");
 const { Users } = require("../Classes/users");
 const { Requests } = require("../Classes/requests");
+const { Models } = require("../Classes/models");
 const rides = new Rides();
 const users = new Users();
 const requests = new Requests();
+const locations = new Models("locations");
 
 // create user rider_id validation
 function validateRiderId() {
@@ -61,26 +63,27 @@ function rideStarted() {
                     status: "accepted"
                 });
 
-                rider_numbers = [];
-                start = { lat: "", long: "" };
-                end = { lat: "", long: "" };
+                riders = [];
                 const details = await Promise.all(
-                    requestDetails.map(async (cur) => {
+                    requestDetails.map(async (cur, i) => {
                         const ride = await rides.getRideDetail(cur.id);
+                        riders.push({
+                            eta: "", //set a blank eta, next middleware will update it.
+                            phone_number: "",
+                            lat: ride.start_lat,
+                            long: ride.start_long
+                        });
+
                         if (ride.rider_phone_number) {
-                            rider_numbers.push(ride.rider_phone_number);
+                            riders[i].phone_number = ride.rider_phone_number;
                         }
-                        start.lat = ride.start_lat;
-                        start.long = ride.start_long;
-                        end.lat = ride.end_lat;
-                        end.long = ride.end_long;
+
                         return cur;
                     })
                 );
 
-                req.start = start;
-                req.end = end;
-                req.numbers = rider_numbers;
+                req.riders = riders;
+                console.log(req.riders);
                 next();
             } else {
                 next();
@@ -91,9 +94,43 @@ function rideStarted() {
     };
 }
 
+// get only riders start location that are accepted
+function getRidersStart() {
+    return async (req, res, next) => {
+        try {
+            const requestDetails = await requests.findAllBy({
+                ride_id: req.params.id,
+                status: "accepted"
+            });
+            start = [];
+            const details = await Promise.all(
+                requestDetails.map(async (cur) => {
+                    const ride = await rides.getRideDetail(cur.id);
+                    start.push({
+                        rider: ride.rider_name,
+                        rider_number: ride.rider_phone_number,
+                        lat: ride.start_lat,
+                        long: ride.start_long
+                    });
+                    return cur;
+                })
+            );
+
+            const location = await rides.getRideLocations(req.params.id);
+
+            req.locations = location;
+            req.riderStarts = start;
+            next();
+        } catch (err) {
+            next(err);
+        }
+    };
+}
+
 module.exports = {
     validateRideId,
     validateRiderId,
     getRideDetail,
-    rideStarted
+    rideStarted,
+    getRidersStart
 };

@@ -41,11 +41,26 @@ class Rides extends Models {
             .where({ "rr.id": req_id })
             .first(
                 "u.first_name as driver_name",
+                "ru.first_name as rider_name",
                 "ru.phone_number as rider_phone_number",
                 "el.lat as end_lat",
                 "el.long as end_long",
                 "sl.lat as start_lat",
                 "sl.long as start_long"
+            );
+    }
+
+    async getRideLocations(id) {
+        return db(`${this.name} as r`)
+            .join("locations as sl", "sl.id", "r.start_location_id")
+            .join("locations as el", "el.id", "r.end_location_id")
+            .where({ "r.id": id })
+            .select(
+                "r.id",
+                "sl.lat as start_lat",
+                "sl.long as start_long",
+                "el.lat as end_lat",
+                "el.long as end_long"
             );
     }
 }
