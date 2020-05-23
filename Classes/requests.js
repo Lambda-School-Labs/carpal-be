@@ -49,13 +49,12 @@ class Requests extends Models {
             );
     }
 
-    getDriverDetails(ride_id) {
-        return db(`${this.name} as r`)
-            .join("rides as ri", "ri.id", "r.ride_id")
-            .join("users as u", "u.id", "ri.driver_id")
-            .where({ "r.ride_id": ride_id })
+    async getDriverDetails(ride_id) {
+        return db("rides as r")
+            .join("users as u", "u.id", "r.driver_id")
+            .where({ "r.id": ride_id })
             .first(
-                "ri.id as ride_id",
+                "r.id as ride_id",
                 "u.first_name as driver_name",
                 "u.phone_number as driver_number"
             );

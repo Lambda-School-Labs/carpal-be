@@ -15,7 +15,7 @@ router.post(
     async (req, res, next) => {
         try {
             const requestBody = {
-                ride_id: req.ride.id,
+                ride_id: req.body.ride_id,
                 rider_id: req.user.id,
                 status: req.body.status,
                 rider_start_location_id: req.rider_start.id,
