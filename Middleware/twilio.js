@@ -31,7 +31,7 @@ function eta() {
                             result.data.routes[0].duration / 60
                         );
                     } else {
-                        rideETA = 0;
+                        rideETA = 5;
                     }
                     cur.eta = rideETA; // update the current eta
 
