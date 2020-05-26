@@ -9,7 +9,8 @@ const requests = new Requests();
 
 router.get("/", async (req, res, next) => {
     try {
-        res.json(await rides.findAll().where({ driver_id: req.user.id }));
+        const userRides = await rides.getDetail()
+        res.json(userRides.filter((ride) => { return ride.driver_id == req.user.id }))
     } catch (err) {
         next(err);
     }

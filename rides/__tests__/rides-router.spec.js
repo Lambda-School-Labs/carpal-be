@@ -19,18 +19,8 @@ describe("Ride Get Route", () => {
     })
     test("Get filtered rides", async () => {
         const res = await supertest(server)
-            .get("/rides")
+            .get('/rides?start_location=%7B"long":-122.463,"lat":37.7648%7D&end_location=%7B"long":-122.39941175,"lat":37.7946225%7D')
             .set({ authorization: token })
-            .send({
-                "start_location": {
-                    "lat": 37.769233,
-                    "long": -122.426907
-                },
-                "end_location": {
-                    "lat": 37.793427,
-                    "long": -122.412691
-                }
-            })
 
         expect(res.status).toBe(200);
         expect(res.type).toEqual("application/json")
