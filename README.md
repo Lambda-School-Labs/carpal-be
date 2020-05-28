@@ -60,13 +60,14 @@ Why did we choose this framework?
 
 ### Users Rides Routes
 
-| Method | Endpoint           | Access Control | Description                                               |
-| ------ | ------------------ | -------------- | --------------------------------------------------------- |
-| GET    | `/users/rides`     | owner          | Returns all rides for a user                              |
-| GET    | `/users/rides/:id` | owner          | Returns aspecific ride for a user, including all requests |
-| PUT    | `/users/rides`     | owner          | Update a user's ride                                      |
-| POST   | `/users/rides`     | owner          | Add a ride for a user                                     |
-| DELETE | `/users/rides`     | owner          | Delete a user's ride                                      |
+| Method | Endpoint                     | Access Control | Description                                               |
+| ------ | ---------------------------- | -------------- | --------------------------------------------------------- |
+| GET    | `/users/rides`               | owner          | Returns all rides for a user                              |
+| GET    | `/users/rides/:id`           | owner          | Returns aspecific ride for a user, including all requests |
+| GET    | `/users/rides/riderStart/:id`| owner          | Returns ride information, including riders' locations     |
+| PUT    | `/users/rides`               | owner          | Update a user's ride                                      |
+| POST   | `/users/rides`               | owner          | Add a ride for a user                                     |
+| DELETE | `/users/rides`               | owner          | Delete a user's ride                                      |
 
 ### Request Routes
 
@@ -80,10 +81,11 @@ Why did we choose this framework?
 
 ### Rides Routes
 
-| Method | Endpoint    | Access Control | Description                                                                           |
-| ------ | ----------- | -------------- | ------------------------------------------------------------------------------------- |
-| GET    | `/rides`    | all users      | Returns all rides, or if sent a start_location and end_location, returns nearby rides |
-| GET    | `/rides/id` | all users      | Returns a specific ride                                                               |
+| Method | Endpoint                                                                                         | Access Control | Description   |
+| ------ | ------------------------------------------------------------------------------------------------ | -------------- | -----------------------|
+| GET    | `/rides`                                                                                         | all users      | Returns all rides     |
+| GET    | `/rides?start_location=%7B"long":<long>,"lat":<lat>%7D&end_location=%7B"long":<long>,"lat":<lat>`| all users      | Returns nearby rides  |
+| GET    | `/rides/id`                                                                                      | all users      | Returns a specific ride |
 
 # Data Model
 
