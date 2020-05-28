@@ -63,7 +63,7 @@ Why did we choose this framework?
 | Method | Endpoint                     | Access Control | Description                                               |
 | ------ | ---------------------------- | -------------- | --------------------------------------------------------- |
 | GET    | `/users/rides`               | owner          | Returns all rides for a user                              |
-  | GET  | `/users/rides/:id`           | owner          | Returns aspecific ride for a user, including all requests |
+| GET    | `/users/rides/:id`           | owner          | Returns aspecific ride for a user, including all requests |
 | GET    | `/users/rides/riderStart/:id`| owner          | Returns ride information, including riders' locations     |
 | PUT    | `/users/rides`               | owner          | Update a user's ride                                      |
 | POST   | `/users/rides`               | owner          | Add a ride for a user                                     |
