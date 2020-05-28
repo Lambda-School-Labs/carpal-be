@@ -26,6 +26,9 @@ jobs:
               env:
                   GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
                   GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+                  TWILIO_SID: ${{ secrets.TWILIO_SID }}
+                  TWILIO_TOKEN: ${{ secrets.TWILIO_TOKEN }}
+                  TWILIO_FROM_PHONE: ${{ secrets.TWILIO_FROM_PHONE }}
                   # An environment variable, the value is a GitHub repo secret
                   CC_TEST_REPORTER_ID: ${{ secrets.CodeClimateReporterId }}
                   with:
